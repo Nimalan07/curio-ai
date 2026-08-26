@@ -6,12 +6,15 @@ from core.session_manager import SessionManager
 from core.student_agent import StudentAgent
 from core.report_generator import ReportGenerator
 from core.ollama_client import check_ollama
+from auth import router as auth_router
 
 app = FastAPI(
     title="Curio API",
     description="AI-powered active learning assistant",
     version="1.0.0"
 )
+
+app.include_router(auth_router)
 
 app.add_middleware(
     CORSMiddleware,

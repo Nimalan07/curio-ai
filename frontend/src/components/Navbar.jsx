@@ -1,5 +1,6 @@
 function Navbar({
   onHome,
+  onLogin,
   showBack = false,
   onScrollToHowItWorks,
   onScrollToFeatures,
@@ -50,8 +51,8 @@ function Navbar({
             </button>
           ) : (
             <>
-              <button className="nav-login-btn">Log in</button>
-              <button className="nav-cta-btn" onClick={onHome}>
+              <button className="nav-login-btn" onClick={onLogin}>Log in</button>
+              <button className="nav-cta-btn" onClick={onLogin}>
                 Start Teaching
               </button>
             </>

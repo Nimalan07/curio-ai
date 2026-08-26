@@ -15,7 +15,8 @@ function Home({ onStart }) {
     <div className="home-page-scrolling">
       {/* NAVBAR */}
       <Navbar
-        onHome={onStart}
+        onHome={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        onLogin={onStart}
         onScrollToHowItWorks={() => scrollTo(howItWorksRef)}
         onScrollToFeatures={() => scrollTo(featuresRef)}
         onScrollToScience={() => scrollTo(scienceRef)}
@@ -65,18 +66,7 @@ function Home({ onStart }) {
               </button>
             </div>
 
-            <div className="hero-trust">
-              <div className="trust-avatars">
-                <span className="avatar-pill a1">A</span>
-                <span className="avatar-pill a2">J</span>
-                <span className="avatar-pill a3">M</span>
-                <span className="avatar-pill a4">S</span>
-              </div>
-              <div className="trust-text">
-                <span className="star-icon">★</span>
-                <strong>4.9</strong> from 80+ learners
-              </div>
-            </div>
+
           </div>
 
           {/* RIGHT COLUMN: INTERACTIVE MOCKUP */}

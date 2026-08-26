@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Home from "./pages/Home";
+import Login from "./pages/Login";
 import TopicSelector from "./pages/TopicSelector";
 import Teach from "./pages/Teach";
 import Results from "./pages/Results";
@@ -14,9 +15,22 @@ function App() {
   const [sessionId, setSessionId] = useState("");
   const [report, setReport] = useState(null);
 
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get("token");
+    const username = params.get("username");
+
+    if (token && username) {
+      localStorage.setItem("curio_token", token);
+      localStorage.setItem("curio_user", JSON.stringify({ username }));
+      window.history.replaceState({}, document.title, window.location.pathname);
+      setPage("topic");
+    }
+  }, []);
+
 
   function startTeaching() {
-    setPage("topic");
+    setPage("login");
   }
 
 
@@ -59,6 +73,13 @@ function App() {
       {page === "home" && (
         <Home
           onStart={startTeaching}
+        />
+      )}
+
+
+      {page === "login" && (
+        <Login
+          onNavigate={setPage}
         />
       )}
 
