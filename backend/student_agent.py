@@ -5,7 +5,7 @@ from ollama_client import generate_student_response
 
 class StudentAgent:
     """
-    ExplainBack's AI learner.
+    Curio's AI learner.
 
     The agent does not teach.
     It asks probing questions based on the student's explanation.

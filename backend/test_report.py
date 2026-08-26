@@ -44,7 +44,7 @@ I don't know the exact process.
 def main():
 
     print("=" * 70)
-    print("ExplainBack - Report Agent Test")
+    print("Curio - Report Agent Test")
     print("=" * 70)
 
     if not check_ollama():
@@ -77,7 +77,7 @@ def main():
     try:
         report = parse_report(raw_report)
 
-        print("\n[OK] Valid ExplainBack report!")
+        print("\n[OK] Valid Curio report!")
 
         print("\nParsed report:")
 

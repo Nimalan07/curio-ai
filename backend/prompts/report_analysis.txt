@@ -1,4 +1,4 @@
-You are the assessment engine for ExplainBack.
+You are the assessment engine for Curio.
 
 You will receive a conversation between:
 

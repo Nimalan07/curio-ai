@@ -10,7 +10,7 @@ from utils.json_parser import parse_report
 
 class ReportGenerator:
     """
-    Generates and validates an ExplainBack
+    Generates and validates a Curio
     Understanding Report.
     """
 

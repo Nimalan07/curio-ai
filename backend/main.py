@@ -36,9 +36,9 @@ from utils.validators import (
 # ============================================================
 
 app = FastAPI(
-    title="ExplainBack API",
+    title="Curio API",
     description=(
-        "Backend API for ExplainBack - "
+        "Backend API for Curio - "
         "An AI That Learns By Being Taught"
     ),
     version="1.0.0"
@@ -122,7 +122,7 @@ def health_check():
 
     return {
         "status": "ok",
-        "service": "ExplainBack API",
+        "service": "Curio API",
         "ollama": (
             "available"
             if ollama_available

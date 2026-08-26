@@ -59,7 +59,7 @@ def extract_json_object(text: str) -> str:
 
 def validate_report(report: Dict[str, Any]) -> Dict[str, Any]:
     """
-    Validate the structure of the ExplainBack report.
+    Validate the structure of the Curio report.
     """
 
     missing_fields = REQUIRED_FIELDS - set(report.keys())

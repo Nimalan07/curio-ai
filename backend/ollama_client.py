@@ -139,7 +139,7 @@ def generate_student_response(
     conversation: List[Dict[str, str]]
 ) -> str:
     """
-    Generate a response from the ExplainBack AI learner.
+    Generate a response from the Curio AI learner.
 
     conversation should contain the user/assistant history,
     excluding the system prompt.
@@ -179,7 +179,7 @@ def generate_report(
         {
             "role": "user",
             "content": (
-                "Analyze the following ExplainBack session.\n\n"
+                "Analyze the following Curio session.\n\n"
                 "SESSION TRANSCRIPT:\n"
                 "-------------------\n"
                 f"{transcript}\n"
@@ -260,7 +260,7 @@ Transcript:
 
 if __name__ == "__main__":
     print("=" * 60)
-    print("ExplainBack - Ollama Client Test")
+    print("Curio - Ollama Client Test")
     print("=" * 60)
 
     print("\nChecking Ollama...")

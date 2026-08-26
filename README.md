@@ -1,6 +1,6 @@
-# ExplainBack Backend
+# Curio AI Backend
 
-ExplainBack is an educational AI prototype designed to learn by being taught. The backend is built using FastAPI, Pydantic, and Ollama (running Llama 3.1 8B).
+Curio is an educational AI prototype designed to learn by being taught. The backend is built using FastAPI, Pydantic, and Ollama (running Llama 3.1 8B).
 
 ## Features
 - **Curious Student Persona**: The AI plays the role of a curious learner who asks probing questions to expose gaps/misconceptions in the student's explanations.
@@ -10,7 +10,7 @@ ExplainBack is an educational AI prototype designed to learn by being taught. Th
 
 ## Directory Structure
 ```text
-explainback/
+curio/
 └── backend/
     ├── main.py                # FastAPI server and endpoints
     ├── config.py              # Server configurations

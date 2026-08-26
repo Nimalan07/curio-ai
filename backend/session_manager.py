@@ -4,7 +4,7 @@ from typing import Dict, List, Optional
 
 class SessionManager:
     """
-    Manages active ExplainBack sessions in memory.
+    Manages active Curio sessions in memory.
 
     Each session contains:
     - topic

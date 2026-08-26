@@ -6,7 +6,7 @@ from ollama_client import (
 
 def main():
     print("=" * 70)
-    print("ExplainBack - Student Agent Test")
+    print("Curio - Student Agent Test")
     print("=" * 70)
 
     if not check_ollama():
