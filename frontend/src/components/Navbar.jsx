@@ -1,4 +1,11 @@
-function Navbar({ onHome, showBack = false, onScrollToHowItWorks, onScrollToFeatures }) {
+function Navbar({
+  onHome,
+  showBack = false,
+  onScrollToHowItWorks,
+  onScrollToFeatures,
+  onScrollToScience,
+  onScrollToReport,
+}) {
   return (
     <header className="navbar">
       <div className="navbar-container">
@@ -26,6 +33,12 @@ function Navbar({ onHome, showBack = false, onScrollToHowItWorks, onScrollToFeat
             </button>
             <button className="nav-link-btn" onClick={onScrollToFeatures}>
               Features
+            </button>
+            <button className="nav-link-btn" onClick={onScrollToScience}>
+              Learning science
+            </button>
+            <button className="nav-link-btn" onClick={onScrollToReport}>
+              Understanding Report
             </button>
           </nav>
         )}
