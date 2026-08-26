@@ -1,13 +1,48 @@
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, Request, HTTPException, Query
 from fastapi.responses import HTMLResponse, RedirectResponse
+from authlib.integrations.starlette_client import OAuth
 from pydantic import BaseModel
 from uuid import uuid4
 import hashlib
 
-from core.database import get_db_user, create_db_user
+from config import (
+    GOOGLE_CLIENT_ID,
+    GOOGLE_CLIENT_SECRET,
+    GOOGLE_REDIRECT_URI,
+    FRONTEND_URL,
+)
+from core.database import (
+    get_db_user,
+    create_db_user,
+    create_user_token,
+    get_username_by_token,
+    delete_user_token
+)
 
 router = APIRouter(prefix="/api/auth", tags=["Authentication"])
 
+# --------------------------------------------------
+# GOOGLE OAUTH CONFIGURATION
+# --------------------------------------------------
+oauth = OAuth()
+
+# Fallback values to prevent Authlib initialization errors on empty env variables
+client_id = GOOGLE_CLIENT_ID if GOOGLE_CLIENT_ID and not GOOGLE_CLIENT_ID.startswith("YOUR_") else "dummy-client-id"
+client_secret = GOOGLE_CLIENT_SECRET if GOOGLE_CLIENT_SECRET and not GOOGLE_CLIENT_SECRET.startswith("YOUR_") else "dummy-client-secret"
+
+oauth.register(
+    name="google",
+    client_id=client_id,
+    client_secret=client_secret,
+    server_metadata_url="https://accounts.google.com/.well-known/openid-configuration",
+    client_kwargs={
+        "scope": "openid email profile"
+    }
+)
+
+# --------------------------------------------------
+# LOCAL USERNAME/PASSWORD FLOW
+# --------------------------------------------------
 class AuthRequest(BaseModel):
     username: str
     password: str
@@ -41,6 +76,7 @@ def register(data: AuthRequest):
         )
 
     token = str(uuid4())
+    create_user_token(token, username)
     return {
         "token": token,
         "user": {
@@ -72,6 +108,7 @@ def login(data: AuthRequest):
         )
 
     token = str(uuid4())
+    create_user_token(token, username)
     return {
         "token": token,
         "user": {
@@ -79,9 +116,34 @@ def login(data: AuthRequest):
         }
     }
 
-@router.get("/google", response_class=HTMLResponse)
-def google_login():
-    # Renders a simulated Google OAuth "Choose an account" screen
+@router.get("/me")
+async def get_current_user(request: Request):
+    auth_header = request.headers.get("Authorization")
+    if not auth_header or not auth_header.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="Missing or invalid token")
+    token = auth_header.split(" ")[1]
+    username = get_username_by_token(token)
+    if not username:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    user = get_db_user(username)
+    return {
+        "username": username,
+        "email": user.get("email"),
+        "provider": user.get("provider")
+    }
+
+@router.post("/logout")
+async def logout(request: Request):
+    auth_header = request.headers.get("Authorization")
+    if auth_header and auth_header.startswith("Bearer "):
+        token = auth_header.split(" ")[1]
+        delete_user_token(token)
+    return {"success": True}
+
+# --------------------------------------------------
+# GOOGLE SIGN-IN OR SIMULATION
+# --------------------------------------------------
+def get_simulated_google_page():
     html_content = """
     <!DOCTYPE html>
     <html lang="en">
@@ -304,16 +366,46 @@ def google_login():
     """
     return HTMLResponse(content=html_content)
 
+@router.get("/google")
+async def google_login(request: Request):
+    # If credentials are not set, fall back to simulated account choosing screen
+    if not GOOGLE_CLIENT_ID or GOOGLE_CLIENT_ID == "YOUR_GOOGLE_CLIENT_ID":
+        return get_simulated_google_page()
+
+    # Real OAuth Flow
+    redirect_uri = GOOGLE_REDIRECT_URI
+    return await oauth.google.authorize_redirect(request, redirect_uri)
+
 @router.get("/google/callback")
-def google_callback(email: str = Query(...), name: str = Query(...)):
-    username = email.split("@")[0].lower().strip()
-    
-    # Store Google user in SQLite DB if not exists
+async def google_callback(request: Request, email: str = None, name: str = None):
+    # Simulated Callback
+    if email and name:
+        username = email.split("@")[0].lower().strip()
+    else:
+        # Real OAuth Callback
+        try:
+            token = await oauth.google.authorize_access_token(request)
+            user_info = token.get("userinfo")
+            if not user_info:
+                raise HTTPException(
+                    status_code=400,
+                    detail="Could not retrieve Google user information."
+                )
+            
+            email = user_info.get("email")
+            name = user_info.get("name", email.split("@")[0])
+            username = email.split("@")[0].lower().strip()
+        except Exception as e:
+            print("Google authentication error:", e)
+            return RedirectResponse(url=f"{FRONTEND_URL}/?error=google_auth_failed")
+
+    # Ensure user exists in local SQLite DB
     user = get_db_user(username)
     if not user:
         create_db_user(username, password_hash=None, email=email, provider="google")
     
-    # Generate redirect token
-    token = str(uuid4())
-    frontend_url = f"http://localhost:5173/?token={token}&username={username}"
-    return RedirectResponse(url=frontend_url)
+    curio_token = str(uuid4())
+    create_user_token(curio_token, username)
+    # Redirect back to frontend
+    redirect_url = f"{FRONTEND_URL}/?token={curio_token}&username={username}"
+    return RedirectResponse(url=redirect_url)

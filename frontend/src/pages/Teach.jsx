@@ -4,19 +4,28 @@ import ChatInput from "../components/ChatInput";
 import ProgressBar from "../components/ProgressBar";
 import { sendMessage, generateReport } from "../api/curioApi";
 
-function Teach({ topic, sessionId, onReport, onBack }) {
-  const [messages, setMessages] = useState([
-    {
-      role: "assistant",
-      content: `I'm ready to learn about ${topic}! Teach me the concept in your own words.`,
-      reason: ""
-    },
-  ]);
+function Teach({ topic, sessionId, onFinish, onBack, initialMessages, initialTurns }) {
+  const [messages, setMessages] = useState(() => {
+    if (initialMessages && initialMessages.length > 0) {
+      return initialMessages.map(msg => ({
+        role: msg.role,
+        content: msg.content,
+        reason: msg.reason || ""
+      }));
+    }
+    return [
+      {
+        role: "assistant",
+        content: `I'm ready to learn about ${topic}! Teach me the concept in your own words.`,
+        reason: ""
+      },
+    ];
+  });
 
   const [loading, setLoading] = useState(false);
   const [reportLoading, setReportLoading] = useState(false);
   const [error, setError] = useState("");
-  const [turns, setTurns] = useState(0);
+  const [turns, setTurns] = useState(initialTurns || 0);
 
   const MAX_TURNS = 6;
 
@@ -77,7 +86,7 @@ function Teach({ topic, sessionId, onReport, onBack }) {
 
       const data = await generateReport(sessionId);
       const finalReport = data.report || data;
-      onReport(finalReport);
+      onFinish(finalReport);
     } catch (err) {
       if (err.message.includes("Failed to fetch") || err.name === "TypeError") {
         setError("Curio is temporarily unavailable. Check that the backend is running.");

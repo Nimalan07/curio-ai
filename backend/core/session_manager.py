@@ -9,9 +9,9 @@ from core.database import (
 )
 
 class SessionManager:
-    def create_session(self, topic: str, confidence: int):
+    def create_session(self, topic: str, confidence: int, username: str = None):
         session_id = str(uuid.uuid4())
-        save_db_session(session_id, topic, confidence, "active", 0)
+        save_db_session(session_id, topic, confidence, "active", 0, username)
         return session_id
 
     def get_session(self, session_id: str):

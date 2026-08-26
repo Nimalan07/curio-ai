@@ -6,6 +6,8 @@ function Navbar({
   onScrollToFeatures,
   onScrollToScience,
   onScrollToReport,
+  user,
+  onLogout,
 }) {
   return (
     <header className="navbar">
@@ -45,17 +47,27 @@ function Navbar({
         )}
 
         <div className="navbar-actions">
-          {showBack ? (
-            <button className="nav-back-btn" onClick={onHome}>
+          {showBack && (
+            <button className="nav-back-btn" style={{ marginRight: '15px' }} onClick={onHome}>
               ← Home
             </button>
-          ) : (
-            <>
-              <button className="nav-login-btn" onClick={onLogin}>Log in</button>
-              <button className="nav-cta-btn" onClick={onLogin}>
-                Start Teaching
+          )}
+          {user ? (
+            <div className="user-profile-menu">
+              <span className="user-greeting">✦ {user.username}</span>
+              <button className="nav-logout-btn" onClick={onLogout}>
+                Log out
               </button>
-            </>
+            </div>
+          ) : (
+            !showBack && (
+              <>
+                <button className="nav-login-btn" onClick={onLogin}>Log in</button>
+                <button className="nav-cta-btn" onClick={onLogin}>
+                  Start Teaching
+                </button>
+              </>
+            )
           )}
         </div>
       </div>

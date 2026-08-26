@@ -35,6 +35,28 @@ def init_db():
     )
     """)
     
+    # Try altering sessions to add username column if it doesn't exist
+    try:
+        cursor.execute("ALTER TABLE sessions ADD COLUMN username TEXT")
+    except sqlite3.OperationalError:
+        pass
+
+    # Try altering sessions to add report column if it doesn't exist
+    try:
+        cursor.execute("ALTER TABLE sessions ADD COLUMN report TEXT")
+    except sqlite3.OperationalError:
+        pass
+        
+    # Create user_tokens table
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS user_tokens (
+        token TEXT PRIMARY KEY,
+        username TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (username) REFERENCES users (username)
+    )
+    """)
+    
     # Create messages table
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS messages (
@@ -77,12 +99,12 @@ def get_db_user(username):
     return None
 
 # Session Helpers
-def save_db_session(session_id, topic, confidence, status="active", turn_count=0):
+def save_db_session(session_id, topic, confidence, status="active", turn_count=0, username=None):
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute(
-        "INSERT OR REPLACE INTO sessions (session_id, topic, confidence, status, turn_count) VALUES (?, ?, ?, ?, ?)",
-        (session_id, topic, confidence, status, turn_count)
+        "INSERT OR REPLACE INTO sessions (session_id, topic, confidence, status, turn_count, username) VALUES (?, ?, ?, ?, ?, ?)",
+        (session_id, topic, confidence, status, turn_count, username)
     )
     conn.commit()
     conn.close()
@@ -139,6 +161,55 @@ def end_db_session(session_id):
     )
     conn.commit()
     conn.close()
+
+# Token Helpers
+def create_user_token(token, username):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        "INSERT INTO user_tokens (token, username) VALUES (?, ?)",
+        (token, username.lower().strip())
+    )
+    conn.commit()
+    conn.close()
+
+def get_username_by_token(token):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT username FROM user_tokens WHERE token = ?", (token,))
+    row = cursor.fetchone()
+    conn.close()
+    return row["username"] if row else None
+
+def delete_user_token(token):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM user_tokens WHERE token = ?", (token,))
+    conn.commit()
+    conn.close()
+
+# Report Helper
+def save_db_report(session_id, report):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        "UPDATE sessions SET report = ?, status = 'completed' WHERE session_id = ?",
+        (report, session_id)
+    )
+    conn.commit()
+    conn.close()
+
+# Sessions list helper
+def get_user_sessions(username):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        "SELECT * FROM sessions WHERE username = ? ORDER BY created_at DESC",
+        (username.lower().strip(),)
+    )
+    rows = cursor.fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
 
 # Initialize database tables immediately
 init_db()

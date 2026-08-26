@@ -44,12 +44,35 @@ Analyze this conversation and return ONLY valid JSON.
         return self._parse(response, topic, confidence)
 
     def _parse(self, response, topic, confidence):
-        response = response.strip()
-        if response.startswith("```"):
-            response = response.replace("```json", "").replace("```", "").strip()
+        cleaned = response.strip()
+        
+        # Remove common prefixes if they exist outside the JSON
+        for prefix in ["assistant:", "assistant"]:
+            if cleaned.lower().startswith(prefix):
+                cleaned = cleaned[len(prefix):].strip()
+                
+        # Strip markdown code blocks
+        if cleaned.startswith("```"):
+            lines = cleaned.splitlines()
+            if lines[0].startswith("```"):
+                lines = lines[1:]
+            if lines and lines[-1].startswith("```"):
+                lines = lines[:-1]
+            cleaned = "\n".join(lines).strip()
+
+        # Find first '{' and last '}'
+        start_idx = cleaned.find("{")
+        end_idx = cleaned.rfind("}")
+        
+        if start_idx != -1 and end_idx != -1 and end_idx > start_idx:
+            json_candidate = cleaned[start_idx:end_idx + 1]
+            try:
+                return json.loads(json_candidate)
+            except json.JSONDecodeError:
+                pass
 
         try:
-            return json.loads(response)
+            return json.loads(cleaned)
         except json.JSONDecodeError:
             retry = self.client.chat([
                 {
@@ -65,12 +88,29 @@ Analyze this conversation and return ONLY valid JSON.
                 }
             ])
 
-            retry = retry.strip()
-            if retry.startswith("```"):
-                retry = retry.replace("```json", "").replace("```", "").strip()
+            retry_cleaned = retry.strip()
+            for prefix in ["assistant:", "assistant"]:
+                if retry_cleaned.lower().startswith(prefix):
+                    retry_cleaned = retry_cleaned[len(prefix):].strip()
+            if retry_cleaned.startswith("```"):
+                lines = retry_cleaned.splitlines()
+                if lines[0].startswith("```"):
+                    lines = lines[1:]
+                if lines and lines[-1].startswith("```"):
+                    lines = lines[:-1]
+                retry_cleaned = "\n".join(lines).strip()
+            
+            retry_start_idx = retry_cleaned.find("{")
+            retry_end_idx = retry_cleaned.rfind("}")
+            if retry_start_idx != -1 and retry_end_idx != -1 and retry_end_idx > retry_start_idx:
+                json_candidate = retry_cleaned[retry_start_idx:retry_end_idx + 1]
+                try:
+                    return json.loads(json_candidate)
+                except json.JSONDecodeError:
+                    pass
 
             try:
-                return json.loads(retry)
+                return json.loads(retry_cleaned)
             except json.JSONDecodeError:
                 # Fallback report if everything fails
                 overall = (confidence + 5.0) / 2.0

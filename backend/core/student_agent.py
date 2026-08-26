@@ -10,6 +10,38 @@ class StudentAgent:
         with open(prompt_path, "r", encoding="utf-8") as file:
             self.system_prompt = file.read()
 
+    def _extract_json(self, response_str: str):
+        cleaned = response_str.strip()
+        
+        # Remove common prefixes if they exist outside the JSON
+        for prefix in ["assistant:", "assistant"]:
+            if cleaned.lower().startswith(prefix):
+                cleaned = cleaned[len(prefix):].strip()
+        
+        # Strip markdown code block
+        if cleaned.startswith("```"):
+            lines = cleaned.splitlines()
+            if lines[0].startswith("```"):
+                lines = lines[1:]
+            if lines and lines[-1].startswith("```"):
+                lines = lines[:-1]
+            cleaned = "\n".join(lines).strip()
+            
+        start_idx = cleaned.find("{")
+        end_idx = cleaned.rfind("}")
+        
+        if start_idx != -1 and end_idx != -1 and end_idx > start_idx:
+            json_candidate = cleaned[start_idx:end_idx + 1]
+            try:
+                return json.loads(json_candidate)
+            except json.JSONDecodeError:
+                pass
+                
+        try:
+            return json.loads(cleaned)
+        except json.JSONDecodeError:
+            return None
+
     def generate_response(self, topic, messages):
         prompt_messages = [
             {
@@ -27,10 +59,11 @@ class StudentAgent:
 
         response = self.client.chat(prompt_messages)
 
-        try:
-            return json.loads(response)
-        except json.JSONDecodeError:
-            return {
-                "question": response,
-                "reason": "I noticed a part of your explanation that needs clarification."
-            }
+        parsed = self._extract_json(response)
+        if parsed and isinstance(parsed, dict) and "question" in parsed:
+            return parsed
+
+        return {
+            "question": response,
+            "reason": "I noticed a part of your explanation that needs clarification."
+        }

@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import Navbar from "../components/Navbar";
 
-function Home({ onStart }) {
+function Home({ onStart, user, onLogout }) {
   const howItWorksRef = useRef(null);
   const featuresRef = useRef(null);
   const scienceRef = useRef(null);
@@ -21,6 +21,8 @@ function Home({ onStart }) {
         onScrollToFeatures={() => scrollTo(featuresRef)}
         onScrollToScience={() => scrollTo(scienceRef)}
         onScrollToReport={() => scrollTo(reportRef)}
+        user={user}
+        onLogout={onLogout}
       />
 
       {/* HERO SECTION */}
