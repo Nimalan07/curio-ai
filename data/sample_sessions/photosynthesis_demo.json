@@ -1,0 +1,49 @@
+{
+  "session_id": "demo-photosynthesis-12345",
+  "topic": "Photosynthesis",
+  "student_confidence": 8,
+  "messages": [
+    {
+      "role": "user",
+      "content": "Photosynthesis is the process plants use to make food using sunlight, carbon dioxide and water."
+    },
+    {
+      "role": "assistant",
+      "content": "What happens to the sunlight after the plant captures it?",
+      "reason": "Your explanation mentions sunlight but does not explain how the captured energy is used."
+    },
+    {
+      "role": "user",
+      "content": "The sunlight gives the plant energy to produce glucose."
+    },
+    {
+      "role": "assistant",
+      "content": "What intermediate molecules carry that energy before glucose is produced?",
+      "reason": "The explanation jumps from sunlight directly to glucose without explaining the intermediate energy-transfer process."
+    }
+  ],
+  "report": {
+    "clarity_score": 7,
+    "completeness_score": 6,
+    "accuracy_score": 8,
+    "depth_score": 6,
+    "overall_score": 6.8,
+    "student_confidence": 8,
+    "confidence_gap": 1.2,
+    "well_explained": [
+      "Identified main ingredients: sunlight, water, carbon dioxide.",
+      "Identified main output: glucose as plant food."
+    ],
+    "gaps_found": [
+      "Jumps directly from light capture to glucose creation.",
+      "Missed light-dependent vs light-independent reactions."
+    ],
+    "misconception_flags": [
+      "Sunlight is treated as a direct chemical ingredient rather than an energy trigger."
+    ],
+    "suggested_review": [
+      "Review the role of Chlorophyll and ATP/NADPH energy carriers.",
+      "Review the Calvin Cycle steps."
+    ]
+  }
+}

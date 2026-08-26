@@ -2,33 +2,23 @@ import { useState } from "react";
 import ChatWindow from "../components/ChatWindow";
 import ChatInput from "../components/ChatInput";
 import ProgressBar from "../components/ProgressBar";
+import { sendMessage, generateReport } from "../api/curioApi";
 
-import {
-  sendMessage,
-  generateReport,
-} from "../services/explainbackApi";
-
-function Teach({
-  topic,
-  sessionId,
-  onReport,
-  onBack,
-}) {
+function Teach({ topic, sessionId, onReport, onBack }) {
   const [messages, setMessages] = useState([
     {
       role: "assistant",
       content: `I'm ready to learn about ${topic}! Teach me the concept in your own words.`,
+      reason: ""
     },
   ]);
 
   const [loading, setLoading] = useState(false);
   const [reportLoading, setReportLoading] = useState(false);
   const [error, setError] = useState("");
-
   const [turns, setTurns] = useState(0);
 
   const MAX_TURNS = 6;
-
 
   async function handleSend(message) {
     if (!message.trim() || loading) {
@@ -50,20 +40,11 @@ function Teach({
     setLoading(true);
 
     try {
-      const data = await sendMessage(
-        sessionId,
-        message.trim()
-      );
-
-      const aiReply =
-        data.reply ||
-        data.message ||
-        data.response;
+      const data = await sendMessage(sessionId, message.trim());
+      const aiReply = data.question || data.reply;
 
       if (!aiReply) {
-        throw new Error(
-          "Curio returned an empty response."
-        );
+        throw new Error("Curio returned an empty response.");
       }
 
       setMessages((previous) => [
@@ -71,19 +52,23 @@ function Teach({
         {
           role: "assistant",
           content: aiReply,
+          reason: data.reason
         },
       ]);
 
-      setTurns((previous) => previous + 1);
-
+      setTurns(data.turn_count !== undefined ? data.turn_count : (turns + 1));
     } catch (err) {
-      setError(err.message);
-
+      if (err.message.includes("Failed to fetch") || err.name === "TypeError") {
+        setError("Curio is temporarily unavailable. Check that the backend is running.");
+      } else if (err.message.toLowerCase().includes("ollama") || err.message.toLowerCase().includes("ai service")) {
+        setError("Curio can't reach its local AI model. Make sure Ollama is running and try again.");
+      } else {
+        setError(err.message);
+      }
     } finally {
       setLoading(false);
     }
   }
-
 
   async function handleGenerateReport() {
     try {
@@ -91,93 +76,57 @@ function Teach({
       setReportLoading(true);
 
       const data = await generateReport(sessionId);
-
       const finalReport = data.report || data;
-
       onReport(finalReport);
-
     } catch (err) {
-      setError(err.message);
-
+      if (err.message.includes("Failed to fetch") || err.name === "TypeError") {
+        setError("Curio is temporarily unavailable. Check that the backend is running.");
+      } else {
+        setError(err.message);
+      }
     } finally {
       setReportLoading(false);
     }
   }
 
-
   const canGenerateReport = turns >= 3;
-
 
   return (
     <div className="teach-page">
-
       <header className="teach-header">
-
-        <button
-          className="back-button"
-          onClick={onBack}
-        >
+        <button className="back-button" onClick={onBack}>
           ← Topics
         </button>
-
 
         <div className="teach-topic">
           <span>TEACHING</span>
           <h2>{topic}</h2>
         </div>
 
-
         <div className="turn-counter">
           {turns}/{MAX_TURNS} turns
         </div>
-
       </header>
 
-
-      <ProgressBar
-        current={turns}
-        total={MAX_TURNS}
-      />
-
+      <ProgressBar current={turns} total={MAX_TURNS} />
 
       {error && (
         <div className="error-banner">
           <span>!</span>
-
           <p>{error}</p>
-
-          <button
-            onClick={() => setError("")}
-          >
-            ×
-          </button>
+          <button onClick={() => setError("")}>×</button>
         </div>
       )}
 
-
       <main className="teach-container">
-
-        <ChatWindow
-          messages={messages}
-          loading={loading}
-        />
-
+        <ChatWindow messages={messages} loading={loading} />
 
         <div className="teach-bottom">
-
-          <ChatInput
-            onSend={handleSend}
-            disabled={loading}
-          />
-
+          <ChatInput onSend={handleSend} disabled={loading} />
 
           <div className="report-action">
-
             {!canGenerateReport ? (
-              <p>
-                Explain a little more before Curio
-                creates your report.
-              </p>
+              <p>Explain a little more before Curio creates your report.</p>
             ) : (
               <button
                 className="generate-report-button"
@@ -190,19 +139,13 @@ function Teach({
                     Analyzing...
                   </>
                 ) : (
-                  <>
-                    Generate Understanding Report →
-                  </>
+                  <>Generate Understanding Report →</>
                 )}
               </button>
             )}
-
           </div>
-
         </div>
-
       </main>
-
     </div>
   );
 }

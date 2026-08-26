@@ -1,5 +1,6 @@
-function ChatMessage({ message }) {
+export default function ChatMessage({ message }) {
   const isUser = message.role === "user";
+  const reason = message.reason;
 
   return (
     <div
@@ -7,7 +8,6 @@ function ChatMessage({ message }) {
         isUser ? "user-message" : "curio-message"
       }`}
     >
-
       {!isUser && (
         <div className="curio-avatar">
           ✦
@@ -15,7 +15,6 @@ function ChatMessage({ message }) {
       )}
 
       <div className="message-content">
-
         <span className="message-author">
           {isUser ? "You" : "Curio"}
         </span>
@@ -24,10 +23,13 @@ function ChatMessage({ message }) {
           {message.content}
         </div>
 
+        {!isUser && reason && (
+          <details className="why-question">
+            <summary>Why I asked this</summary>
+            <p>{reason}</p>
+          </details>
+        )}
       </div>
-
     </div>
   );
 }
-
-export default ChatMessage;

@@ -4,81 +4,66 @@ import {
   PolarGrid,
   PolarAngleAxis,
   PolarRadiusAxis,
-  ResponsiveContainer,
-  Tooltip,
+  ResponsiveContainer
 } from "recharts";
 
-function RadarChart({ report }) {
+
+export default function RadarChart({
+  report
+}) {
+
   const data = [
     {
       subject: "Clarity",
-      score: Number(report.clarity_score) || 0,
-      fullMark: 10,
+      score: report.clarity_score
     },
     {
       subject: "Completeness",
-      score: Number(report.completeness_score) || 0,
-      fullMark: 10,
+      score: report.completeness_score
     },
     {
       subject: "Accuracy",
-      score: Number(report.accuracy_score) || 0,
-      fullMark: 10,
+      score: report.accuracy_score
     },
     {
       subject: "Depth",
-      score: Number(report.depth_score) || 0,
-      fullMark: 10,
-    },
+      score: report.depth_score
+    }
   ];
 
+
   return (
-    <div className="radar-card">
-      <div className="section-heading">
-        <div>
-          <span className="section-label">UNDERSTANDING</span>
-          <h2>Overall Understanding</h2>
-        </div>
-      </div>
+    <div className="radar-wrapper">
 
-      <div className="radar-wrapper">
-        <ResponsiveContainer width="100%" height={360}>
-          <RechartsRadarChart data={data}>
-            <PolarGrid />
+      <ResponsiveContainer
+        width="100%"
+        height={350}
+      >
 
-            <PolarAngleAxis
-              dataKey="subject"
-              tick={{
-                fill: "#0F172A",
-                fontSize: 13,
-                fontWeight: 600,
-              }}
-            />
+        <RechartsRadarChart data={data}>
 
-            <PolarRadiusAxis
-              angle={90}
-              domain={[0, 10]}
-              tick={{
-                fill: "#64748B",
-                fontSize: 11,
-              }}
-            />
+          <PolarGrid />
 
-            <Radar
-              name="Understanding"
-              dataKey="score"
-              stroke="#1976D2"
-              fill="#1976D2"
-              fillOpacity={0.35}
-              strokeWidth={3}
-            />
+          <PolarAngleAxis
+            dataKey="subject"
+          />
 
-            <Tooltip />
-          </RechartsRadarChart>
-        </ResponsiveContainer>
-      </div>
+          <PolarRadiusAxis
+            domain={[0, 10]}
+          />
+
+          <Radar
+            name="Understanding"
+            dataKey="score"
+            stroke="#1976D2"
+            fill="#1976D2"
+            fillOpacity={0.18}
+          />
+
+        </RechartsRadarChart>
+
+      </ResponsiveContainer>
+
     </div>
   );
 }
-
-export default RadarChart;

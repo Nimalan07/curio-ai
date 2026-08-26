@@ -1870,3 +1870,326 @@ h1, h2, h3, h4, h5 {
     margin-left: 12px;
   }
 }
+
+/* =========================================
+   DAY 5 FINAL ADDITIONS
+========================================= */
+
+/* Thinking Animation */
+.thinking-message {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin: 20px 0;
+  text-align: left;
+}
+
+.thinking-avatar {
+  min-width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  background: linear-gradient(
+    135deg,
+    #1976D2,
+    #16A34A
+  );
+}
+
+.thinking-name {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.thinking-bubble {
+  display: flex;
+  gap: 5px;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  background: #F1F5F9;
+  align-items: center;
+}
+
+.thinking-bubble span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #1976D2;
+  animation: thinking 1.2s infinite ease-in-out;
+}
+
+.thinking-bubble span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.thinking-bubble span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes thinking {
+  0%, 60%, 100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  30% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+}
+
+/* Why I Asked Collapsible details */
+.why-question {
+  margin-top: 8px;
+  text-align: left;
+}
+
+.why-question summary {
+  cursor: pointer;
+  color: #1976D2;
+  font-size: 13px;
+  font-weight: 600;
+  outline: none;
+}
+
+.why-question p {
+  margin-top: 8px;
+  color: #64748B;
+  font-size: 13px;
+  line-height: 1.5;
+  background: #EFF8FF;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #DBEAFE;
+}
+
+/* Confidence Box and Slider */
+.confidence-box {
+  max-width: 650px;
+  margin: 30px auto;
+  padding: 28px;
+  background: white;
+  border: 1px solid #E2E8F0;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(15, 23, 42, 0.06);
+}
+
+.confidence-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  text-align: left;
+}
+
+.confidence-header h3 {
+  margin: 0;
+  color: #0F172A;
+}
+
+.confidence-header p {
+  margin-top: 8px;
+  color: #64748B;
+  line-height: 1.5;
+}
+
+.confidence-number {
+  width: 65px;
+  height: 65px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  color: white;
+  font-size: 25px;
+  font-weight: 800;
+  background: linear-gradient(
+    135deg,
+    #1976D2,
+    #16A34A
+  );
+  min-width: 65px;
+}
+
+.confidence-box input {
+  width: 100%;
+  margin-top: 25px;
+  accent-color: #1976D2;
+}
+
+.confidence-scale {
+  display: flex;
+  justify-content: space-between;
+  color: #94A3B8;
+  font-size: 12px;
+  margin-top: 7px;
+}
+
+/* Results / Understanding Report Page */
+.results-page {
+  min-height: 100vh;
+  background: #F8FAFC;
+  padding-bottom: 80px;
+}
+
+.results-page .report-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  background: transparent;
+  box-shadow: none;
+}
+
+.results-page .report-header {
+  text-align: center;
+  margin-bottom: 40px;
+  flex-direction: column;
+}
+
+.results-page .eyebrow {
+  color: #1976D2;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  display: block;
+}
+
+.results-page .report-header h1 {
+  color: #0F172A;
+  font-size: 42px;
+  letter-spacing: -1.5px;
+  margin: 12px 0 20px;
+}
+
+.results-page .overall-score {
+  font-size: 72px;
+  font-weight: 800;
+  color: #1976D2;
+}
+
+.results-page .overall-score span {
+  font-size: 24px;
+  color: #64748B;
+}
+
+.results-page .report-card,
+.results-page .confidence-comparison,
+.results-page .report-section {
+  background: white;
+  border: 1px solid #E2E8F0;
+  border-radius: 24px;
+  padding: 30px;
+  margin-bottom: 20px;
+  box-shadow: 0 12px 35px rgba(15, 23, 42, 0.05);
+  text-align: left;
+}
+
+.results-page .report-card h2,
+.results-page .confidence-comparison h2,
+.results-page .report-section h2 {
+  color: #0F172A;
+  margin-top: 0;
+}
+
+.confidence-comparison p {
+  color: #64748B;
+  font-size: 14px;
+  margin-top: 15px;
+}
+
+.confidence-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.confidence-grid div {
+  padding: 20px;
+  border-radius: 16px;
+  background: #F8FAFC;
+}
+
+.confidence-grid span {
+  display: block;
+  color: #64748B;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.confidence-grid strong {
+  font-size: 26px;
+  color: #0F172A;
+}
+
+.results-page .report-section ul {
+  padding-left: 20px;
+  list-style: disc;
+}
+
+.results-page .report-section li {
+  margin-bottom: 10px;
+  color: #475569;
+  line-height: 1.5;
+  border-bottom: none;
+  padding: 0;
+}
+
+.results-page .report-section.good {
+  border-left: 4px solid #16A34A;
+}
+
+.results-page .report-section.good h2 {
+  color: #16A34A;
+}
+
+.results-page .report-section.gap {
+  border-left: 4px solid #1976D2;
+}
+
+.results-page .report-section.gap h2 {
+  color: #1976D2;
+}
+
+.results-page .report-section.warning {
+  border-left: 4px solid #DC2626;
+}
+
+.results-page .report-section.warning h2 {
+  color: #DC2626;
+}
+
+.results-page .report-section.review {
+  border-left: 4px solid #0891B2;
+}
+
+.results-page .report-section.review h2 {
+  color: #0891B2;
+}
+
+.report-actions {
+  text-align: center;
+  margin: 30px;
+}
+
+.download-button {
+  border: none;
+  padding: 14px 24px;
+  border-radius: 12px;
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  background: linear-gradient(135deg, #1976D2, #16A34A);
+  box-shadow: 0 10px 25px rgba(25, 118, 210, 0.2);
+  transition: transform 0.2s ease;
+}
+
+.download-button:hover {
+  transform: translateY(-2px);
+}
+
