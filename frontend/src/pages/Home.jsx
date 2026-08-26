@@ -110,7 +110,12 @@ function Home({ onStart }) {
                 {/* MESSAGES */}
                 <div className="mockup-messages">
                   <div className="mock-message user">
-                    <div className="mock-avatar">U</div>
+                    <div className="mock-avatar">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: "12px", height: "12px" }}>
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                      </svg>
+                    </div>
                     <div className="mock-bubble">
                       Photosynthesis is the process by which plants use sunlight,
                       carbon dioxide and water to make their own food.
@@ -133,7 +138,12 @@ function Home({ onStart }) {
                   </div>
 
                   <div className="mock-message user">
-                    <div className="mock-avatar">U</div>
+                    <div className="mock-avatar">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: "12px", height: "12px" }}>
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                      </svg>
+                    </div>
                     <div className="mock-bubble">
                       The sunlight gives energy to the plant so it can produce
                       glucose.
@@ -173,36 +183,31 @@ function Home({ onStart }) {
 
               {/* STATIC MINI RADAR CHART SVG */}
               <div className="mockup-radar-svg">
-                <svg viewBox="0 0 120 120" width="100%" height="100%">
-                  {/* Grid Lines */}
-                  <circle cx="60" cy="60" r="40" fill="none" stroke="#E2E8F0" strokeWidth="1" />
-                  <circle cx="60" cy="60" r="25" fill="none" stroke="#E2E8F0" strokeWidth="1" />
-                  <circle cx="60" cy="60" r="10" fill="none" stroke="#E2E8F0" strokeWidth="1" />
+                <svg viewBox="0 0 170 130" width="100%" height="100%">
+                  {/* Grid Circles */}
+                  <circle cx="85" cy="65" r="40" fill="none" stroke="#E2E8F0" strokeWidth="1" />
+                  <circle cx="85" cy="65" r="25" fill="none" stroke="#E2E8F0" strokeWidth="1" />
+                  <circle cx="85" cy="65" r="10" fill="none" stroke="#E2E8F0" strokeWidth="1" />
                   {/* Axis lines */}
-                  <line x1="60" y1="20" x2="60" y2="100" stroke="#E2E8F0" strokeWidth="1" />
-                  <line x1="20" y1="60" x2="100" y2="60" stroke="#E2E8F0" strokeWidth="1" />
+                  <line x1="85" y1="25" x2="85" y2="105" stroke="#E2E8F0" strokeWidth="1" />
+                  <line x1="45" y1="65" x2="125" y2="65" stroke="#E2E8F0" strokeWidth="1" />
                   {/* Labels */}
-                  <text x="60" y="15" textAnchor="middle" fontSize="6" fontWeight="bold" fill="#64748B">Clarity</text>
-                  <text x="105" y="62" fontSize="6" fontWeight="bold" fill="#64748B">Completeness</text>
-                  <text x="60" y="110" textAnchor="middle" fontSize="6" fontWeight="bold" fill="#64748B">Accuracy</text>
-                  <text x="5" y="62" fontSize="6" fontWeight="bold" fill="#64748B">Depth</text>
-                  {/* Score Values mapping: 
-                      Clarity: 7.0 -> cx=60, cy=32
-                      Completeness: 6.0 -> cx=84, cy=60
-                      Accuracy: 8.0 -> cx=60, cy=92
-                      Depth: 6.0 -> cx=36, cy=60
-                  */}
+                  <text x="85" y="18" textAnchor="middle" fontSize="7" fontWeight="700" fill="#64748B">Clarity</text>
+                  <text x="130" y="67" textAnchor="start" fontSize="7" fontWeight="700" fill="#64748B">Completeness</text>
+                  <text x="85" y="118" textAnchor="middle" fontSize="7" fontWeight="700" fill="#64748B">Accuracy</text>
+                  <text x="40" y="67" textAnchor="end" fontSize="7" fontWeight="700" fill="#64748B">Depth</text>
+                  {/* Blue Polygon */}
                   <polygon
-                    points="60,32 84,60 60,92 36,60"
-                    fill="rgba(59, 130, 246, 0.2)"
+                    points="85,37 109,65 85,97 61,65"
+                    fill="rgba(59, 130, 246, 0.15)"
                     stroke="#3B82F6"
                     strokeWidth="1.5"
                   />
                   {/* Score Text labels */}
-                  <text x="60" y="27" textAnchor="middle" fontSize="6" fill="#0F172A" fontWeight="bold">7.0</text>
-                  <text x="92" y="58" fontSize="6" fill="#0F172A" fontWeight="bold">6.0</text>
-                  <text x="60" y="87" textAnchor="middle" fontSize="6" fill="#0F172A" fontWeight="bold">8.0</text>
-                  <text x="24" y="58" fontSize="6" fill="#0F172A" fontWeight="bold">6.0</text>
+                  <text x="85" y="32" textAnchor="middle" fontSize="6.5" fill="#0F172A" fontWeight="bold">7.0</text>
+                  <text x="114" y="61" textAnchor="middle" fontSize="6.5" fill="#0F172A" fontWeight="bold">6.0</text>
+                  <text x="85" y="93" textAnchor="middle" fontSize="6.5" fill="#0F172A" fontWeight="bold">8.0</text>
+                  <text x="56" y="61" textAnchor="middle" fontSize="6.5" fill="#0F172A" fontWeight="bold">6.0</text>
                 </svg>
               </div>
             </div>

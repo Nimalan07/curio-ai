@@ -27,8 +27,6 @@ function Navbar({ onHome, showBack = false, onScrollToHowItWorks, onScrollToFeat
             <button className="nav-link-btn" onClick={onScrollToFeatures}>
               Features
             </button>
-            <button className="nav-link-btn">For Students</button>
-            <button className="nav-link-btn">For Teachers</button>
           </nav>
         )}
 
