@@ -2,328 +2,286 @@ import { useRef } from "react";
 import Navbar from "../components/Navbar";
 
 function Home({ onStart }) {
-  const howItWorksRef = useRef(null);
+  const featuresRef = useRef(null);
 
-  function scrollToHowItWorks() {
-    howItWorksRef.current?.scrollIntoView({ behavior: "smooth" });
+  function scrollToFeatures() {
+    featuresRef.current?.scrollIntoView({ behavior: "smooth" });
   }
 
   return (
     <div className="home-page">
-      <Navbar onHome={onStart} onScrollToHowItWorks={scrollToHowItWorks} />
+      <Navbar
+        onHome={onStart}
+        onScrollToHowItWorks={scrollToFeatures}
+        onScrollToFeatures={scrollToFeatures}
+      />
 
       {/* HERO SECTION */}
       <section className="hero-section">
-        <div className="hero-container">
-          <div className="hero-badge">AI-Powered Active Learning</div>
-          
-          <h1 className="hero-title">
-            Don't just study it.
-            <span className="hero-gradient"> Explain it.</span>
-          </h1>
-
-          <p className="hero-subtitle">
-            Curio learns by being taught. Explain a concept in your own words, and
-            Curio will ask the questions that reveal what you actually understand.
-          </p>
-
-          <div className="hero-actions">
-            <button className="primary-button hero-cta" onClick={onStart}>
-              Start Teaching →
-            </button>
-            <button className="secondary-button" onClick={scrollToHowItWorks}>
-              See how Curio works
-            </button>
-          </div>
-
-          {/* VISUAL LOOP CARDS */}
-          <div className="visual-loop">
-            <div className="loop-card card-explain">
-              <span className="loop-number">01</span>
-              <h4>You Explain</h4>
-              <p className="loop-quote">
-                "Photosynthesis is how plants make food using sunlight..."
-              </p>
+        <div className="hero-grid">
+          {/* LEFT COLUMN: PITCH & CALL-TO-ACTION */}
+          <div className="hero-content">
+            <div className="hero-badge">
+              <span className="badge-dot"></span>
+              AI-powered active learning
             </div>
 
-            <div className="loop-connector">➔</div>
+            <h1 className="hero-title">
+              Don't just study it.
+              <br />
+              <span className="hero-highlight-blue">Explain </span>
+              <span className="hero-highlight-green">it.</span>
+            </h1>
 
-            <div className="loop-card card-ask">
-              <span className="loop-number">02</span>
-              <h4>Curio Asks</h4>
-              <p className="loop-quote">
-                "But what happens to the sunlight after the plant captures it?"
-              </p>
+            <p className="hero-subtitle">
+              Curio learns by being taught. Explain any concept in your own words,
+              and Curio will ask the questions that reveal what you really
+              understand.
+            </p>
+
+            <div className="hero-actions">
+              <button className="primary-button hero-cta" onClick={onStart}>
+                Start Teaching →
+              </button>
+              <button className="secondary-button" onClick={scrollToFeatures}>
+                <svg
+                  className="play-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8 5V19L19 12L8 5Z"
+                    fill="currentColor"
+                  />
+                </svg>
+                Watch Demo
+              </button>
             </div>
 
-            <div className="loop-connector">➔</div>
-
-            <div className="loop-card card-discover">
-              <span className="loop-number">03</span>
-              <h4>You Discover</h4>
-              <p className="loop-status">⚠ Gap identified: Energy conversion</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* THE PROBLEM */}
-      <section className="problem-section">
-        <div className="section-container text-center">
-          <span className="section-label">THE LEARNING GAP</span>
-          <h2 className="section-title">Recognition ≠ Understanding</h2>
-          <p className="problem-text">
-            We often confuse recognizing information with actually understanding it.
-            Rereading, highlighting, and flashcards create the illusion of mastery.
-            The only way to prove you understand a concept is to explain it simply to someone else.
-          </p>
-        </div>
-      </section>
-
-      {/* HOW IT WORKS */}
-      <section className="how-it-works" ref={howItWorksRef}>
-        <div className="section-container">
-          <div className="text-center margin-bottom-lg">
-            <span className="section-label">METHODOLOGY</span>
-            <h2 className="section-title">A 3-step loop to test your boundaries</h2>
-          </div>
-
-          {/* TIMELINE CONNECTOR */}
-          <div className="timeline-container">
-            <div className="timeline-track">
-              <div className="timeline-dot active"></div>
-              <div className="timeline-dot"></div>
-              <div className="timeline-dot"></div>
-            </div>
-            
-            <div className="timeline-steps">
-              <div className="timeline-step">
-                <span className="step-num">01</span>
-                <h3>You Explain</h3>
-                <p>Teach Curio a concept using your own words. Explain it like you're talking to a curious friend.</p>
+            <div className="hero-trust">
+              <div className="trust-avatars">
+                <span className="avatar-pill a1">A</span>
+                <span className="avatar-pill a2">J</span>
+                <span className="avatar-pill a3">M</span>
+                <span className="avatar-pill a4">S</span>
               </div>
-
-              <div className="timeline-step">
-                <span className="step-num">02</span>
-                <h3>Curio Questions</h3>
-                <p>Curio acts as a curious student, identifying vague statements or gaps and asking targeted follow-ups.</p>
-              </div>
-
-              <div className="timeline-step">
-                <span className="step-num">03</span>
-                <h3>You Discover</h3>
-                <p>Get a detailed report showing your clarity, completeness, accuracy, and depth scores, along with review tips.</p>
+              <div className="trust-text">
+                <span className="star-icon">★</span>
+                <strong>4.9</strong> from 80+ learners
               </div>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* CHAT PRODUCT PREVIEW */}
-      <section className="product-preview-section">
-        <div className="section-container">
-          <div className="preview-window">
-            <div className="preview-header">
-              <div className="preview-dots">
-                <span></span>
-                <span></span>
-                <span></span>
+          {/* RIGHT COLUMN: INTERACTIVE MOCKUP */}
+          <div className="hero-visual">
+            <div className="mockup-chat-container">
+              {/* HEADER */}
+              <div className="mockup-header">
+                <div className="mockup-brand">
+                  <div className="mockup-logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M12 2C12 7.5 7.5 12 2 12C7.5 12 12 16.5 12 22C12 16.5 16.5 12 22 12C16.5 12 12 7.5 12 2Z"
+                        fill="currentColor"
+                      />
+                    </svg>
+                  </div>
+                  <span>Curio</span>
+                </div>
+                <div className="mockup-status">
+                  <span className="status-dot"></span>
+                  Session in progress
+                </div>
               </div>
-              <div className="preview-title">Curio — Teaching Session</div>
-              <div className="preview-status">● Listening</div>
-            </div>
 
-            <div className="preview-chat-body">
-              <div className="preview-msg msg-user">
-                <div className="preview-avatar">Y</div>
-                <div className="msg-content">
-                  <span className="msg-author">You</span>
-                  <div className="msg-bubble">
-                    Photosynthesis is the process where plants take in sunlight, water, and carbon dioxide to make glucose (food) and release oxygen as a byproduct.
+              {/* BODY */}
+              <div className="mockup-body">
+                <div className="mockup-topic">
+                  <h3>Photosynthesis</h3>
+                  <div className="mockup-progress-row">
+                    <div className="mockup-progress-bar">
+                      <div className="fill" style={{ width: "66%" }}></div>
+                    </div>
+                    <span>4 / 6 turns</span>
+                  </div>
+                </div>
+
+                {/* MESSAGES */}
+                <div className="mockup-messages">
+                  <div className="mock-message user">
+                    <div className="mock-avatar">U</div>
+                    <div className="mock-bubble">
+                      Photosynthesis is the process by which plants use sunlight,
+                      carbon dioxide and water to make their own food.
+                    </div>
+                  </div>
+
+                  <div className="mock-message curio">
+                    <div className="mock-avatar curio-av">✦</div>
+                    <div className="mock-bubble">
+                      Great start! But what happens to the sunlight after the plant
+                      captures it?
+                      <details className="mock-why">
+                        <summary>Why I asked this</summary>
+                        <p>
+                          The explanation mentions sunlight but does not explain
+                          how the captured energy is used.
+                        </p>
+                      </details>
+                    </div>
+                  </div>
+
+                  <div className="mock-message user">
+                    <div className="mock-avatar">U</div>
+                    <div className="mock-bubble">
+                      The sunlight gives energy to the plant so it can produce
+                      glucose.
+                    </div>
+                  </div>
+                </div>
+
+                {/* INPUT */}
+                <div className="mockup-input">
+                  <span className="input-placeholder">Type your explanation here...</span>
+                  <div className="input-controls">
+                    <div className="left-icons">
+                      <span className="icon-mic">🎙</span>
+                      <span className="icon-clip">📎</span>
+                    </div>
+                    <button className="send-btn">
+                      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M2.01 21L23 12L2.01 3L2 10L17 12L2 14L2.01 21Z"
+                          fill="currentColor"
+                        />
+                      </svg>
+                    </button>
                   </div>
                 </div>
               </div>
+            </div>
 
-              <div className="preview-msg msg-curio">
-                <div className="preview-avatar curio-av">✦</div>
-                <div className="msg-content">
-                  <span className="msg-author">Curio</span>
-                  <div className="msg-bubble">
-                    So the plant takes in water and carbon dioxide, and the energy from sunlight helps turn those into glucose. But what's the role of chlorophyll in all this? How does it help capture that sunlight?
-                  </div>
-                </div>
+            {/* OVERLAPPING METRICS CARD */}
+            <div className="mockup-metrics-card">
+              <h4>Understanding Preview</h4>
+              <div className="overall-score-preview">
+                <strong>6.8</strong>
+                <span>/ 10</span>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
+              <p className="overall-label">Overall Understanding</p>
 
-      {/* WHY CURIO */}
-      <section className="why-curio-section">
-        <div className="section-container">
-          <div className="text-center margin-bottom-lg">
-            <span className="section-label">WHY CURIO</span>
-            <h2 className="section-title">Learning that tests understanding, not memory</h2>
-          </div>
-
-          <div className="features-grid">
-            <div className="feature-card">
-              <div className="feature-icon">✏️</div>
-              <h3>Teach, don't select</h3>
-              <p>Explain concepts in your own words instead of choosing answers from a multiple-choice list.</p>
-            </div>
-
-            <div className="feature-card">
-              <div className="feature-icon">❓</div>
-              <h3>Curio asks why</h3>
-              <p>The AI follows up when your explanation is vague, incomplete, or contains potential contradictions.</p>
-            </div>
-
-            <div className="feature-card">
-              <div className="feature-icon">🔍</div>
-              <h3>Find the hidden gaps</h3>
-              <p>Curio identifies the exact points where your explanation skips critical parts of the concept.</p>
-            </div>
-
-            <div className="feature-card">
-              <div className="feature-icon">📊</div>
-              <h3>Get your Report</h3>
-              <p>See scores across clarity, completeness, accuracy, and depth, plus misconceptions and recommended reviews.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* REPORT PREVIEW */}
-      <section className="report-preview-section">
-        <div className="section-container">
-          <div className="report-preview-layout">
-            <div className="report-preview-text">
-              <span className="section-label">THE OUTCOME</span>
-              <h2 className="section-title">An honest view of what you know</h2>
-              <p>
-                Every session ends with a personalized Understanding Report. 
-                Instead of simple letter grades, Curio maps your cognitive structure 
-                so you know exactly what parts need a second look.
-              </p>
-              
-              <div className="report-preview-metrics">
-                <div className="mini-metric">
-                  <span>Clarity</span>
-                  <div className="mini-bar"><div className="fill" style={{width: "82%"}}></div></div>
-                  <strong>8.2</strong>
-                </div>
-                <div className="mini-metric">
-                  <span>Completeness</span>
-                  <div className="mini-bar"><div className="fill" style={{width: "70%"}}></div></div>
-                  <strong>7.0</strong>
-                </div>
-                <div className="mini-metric">
-                  <span>Accuracy</span>
-                  <div className="mini-bar"><div className="fill" style={{width: "90%"}}></div></div>
-                  <strong>9.0</strong>
-                </div>
+              {/* STATIC MINI RADAR CHART SVG */}
+              <div className="mockup-radar-svg">
+                <svg viewBox="0 0 120 120" width="100%" height="100%">
+                  {/* Grid Lines */}
+                  <circle cx="60" cy="60" r="40" fill="none" stroke="#E2E8F0" strokeWidth="1" />
+                  <circle cx="60" cy="60" r="25" fill="none" stroke="#E2E8F0" strokeWidth="1" />
+                  <circle cx="60" cy="60" r="10" fill="none" stroke="#E2E8F0" strokeWidth="1" />
+                  {/* Axis lines */}
+                  <line x1="60" y1="20" x2="60" y2="100" stroke="#E2E8F0" strokeWidth="1" />
+                  <line x1="20" y1="60" x2="100" y2="60" stroke="#E2E8F0" strokeWidth="1" />
+                  {/* Labels */}
+                  <text x="60" y="15" textAnchor="middle" fontSize="6" fontWeight="bold" fill="#64748B">Clarity</text>
+                  <text x="105" y="62" fontSize="6" fontWeight="bold" fill="#64748B">Completeness</text>
+                  <text x="60" y="110" textAnchor="middle" fontSize="6" fontWeight="bold" fill="#64748B">Accuracy</text>
+                  <text x="5" y="62" fontSize="6" fontWeight="bold" fill="#64748B">Depth</text>
+                  {/* Score Values mapping: 
+                      Clarity: 7.0 -> cx=60, cy=32
+                      Completeness: 6.0 -> cx=84, cy=60
+                      Accuracy: 8.0 -> cx=60, cy=92
+                      Depth: 6.0 -> cx=36, cy=60
+                  */}
+                  <polygon
+                    points="60,32 84,60 60,92 36,60"
+                    fill="rgba(59, 130, 246, 0.2)"
+                    stroke="#3B82F6"
+                    strokeWidth="1.5"
+                  />
+                  {/* Score Text labels */}
+                  <text x="60" y="27" textAnchor="middle" fontSize="6" fill="#0F172A" fontWeight="bold">7.0</text>
+                  <text x="92" y="58" fontSize="6" fill="#0F172A" fontWeight="bold">6.0</text>
+                  <text x="60" y="87" textAnchor="middle" fontSize="6" fill="#0F172A" fontWeight="bold">8.0</text>
+                  <text x="24" y="58" fontSize="6" fill="#0F172A" fontWeight="bold">6.0</text>
+                </svg>
               </div>
             </div>
 
-            <div className="report-preview-card">
-              <div className="preview-card-header">
-                <span className="card-badge">UNDERSTANDING REPORT</span>
-                <h3>Photosynthesis Results</h3>
-              </div>
-              
-              <div className="preview-card-sections">
-                <div className="card-sec success">
-                  <h5>✓ What You Explained Well</h5>
-                  <p>Role of sunlight, basic chemical equation, plant absorption.</p>
-                </div>
-                <div className="card-sec warning">
-                  <h5>⚠ Gaps Found</h5>
-                  <p>Light-dependent reactions, chlorophyll energy conversion process.</p>
-                </div>
-                <div className="card-sec danger">
-                  <h5>? Possible Misconceptions</h5>
-                  <p>Confused direct sugar synthesis timing with solar capturing.</p>
-                </div>
-              </div>
+            {/* 3D MASCOT ASSET */}
+            <div className="mockup-mascot-wrapper">
+              <img src="/mascot.png" alt="Curio mascot" className="mascot-img" />
             </div>
           </div>
         </div>
       </section>
 
-      {/* LEARNING SCIENCE */}
-      <section className="science-section">
-        <div className="section-container">
-          <div className="text-center margin-bottom-lg">
-            <span className="section-label">COGNITIVE SCIENCE</span>
-            <h2 className="section-title">Built on proven learning models</h2>
+      {/* BOTTOM FOUR CARDS GRID */}
+      <section className="features-bar-section" ref={featuresRef}>
+        <div className="features-bar-grid">
+          <div className="feature-bar-card">
+            <div className="feature-bar-icon-box f-blue">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2ZM20 16H5.2L4 17.2V4H20V16Z"
+                  fill="currentColor"
+                />
+                <circle cx="8" cy="10" r="1.5" fill="currentColor"/>
+                <circle cx="12" cy="10" r="1.5" fill="currentColor"/>
+                <circle cx="16" cy="10" r="1.5" fill="currentColor"/>
+              </svg>
+            </div>
+            <div className="feature-bar-content">
+              <h3>Teach in your own words</h3>
+              <p>Explain any concept naturally, just like you would to a friend.</p>
+            </div>
           </div>
 
-          <div className="science-grid">
-            <div className="science-card">
-              <h4>The Feynman Technique</h4>
-              <p>
-                Named after physicist Richard Feynman, this technique says that explaining a concept 
-                simply to others forces you to locate and resolve the gaps in your own knowledge.
-              </p>
+          <div className="feature-bar-card">
+            <div className="feature-bar-icon-box f-green">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M12 2C12 7.5 7.5 12 2 12C7.5 12 12 16.5 12 22C12 16.5 16.5 12 22 12C16.5 12 12 7.5 12 2Z"
+                  fill="currentColor"
+                />
+              </svg>
             </div>
+            <div className="feature-bar-content">
+              <h3>Curio asks smart questions</h3>
+              <p>Our AI student asks follow-ups that test your real understanding.</p>
+            </div>
+          </div>
 
-            <div className="science-card">
-              <h4>The Protégé Effect</h4>
-              <p>
-                Studies show that students who prepare to teach others (or teach a peer) develop 
-                significantly better conceptual understanding and recall than those who study for a test.
-              </p>
+          <div className="feature-bar-card">
+            <div className="feature-bar-icon-box f-yellow">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM9 17H7V10H9V17ZM13 17H11V7H13V17ZM17 17H15V12H17V17Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </div>
+            <div className="feature-bar-content">
+              <h3>Discover your gaps</h3>
+              <p>Curio identifies what's missing, vague, or misunderstood.</p>
+            </div>
+          </div>
+
+          <div className="feature-bar-card">
+            <div className="feature-bar-icon-box f-purple">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M14 2H6C4.9 2 4.01 2.9 4.01 4L4 20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8L14 2ZM18 20H6V4H13V9H18V20Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </div>
+            <div className="feature-bar-content">
+              <h3>Get your report</h3>
+              <p>See a detailed understanding report with scores and insights.</p>
             </div>
           </div>
         </div>
       </section>
-
-      {/* CTA SECTION */}
-      <section className="cta-section">
-        <div className="section-container text-center">
-          <h2>Ready to find out what you really understand?</h2>
-          <p>Don't study harder. Explain better.</p>
-          <button className="primary-button hero-cta" onClick={onStart}>
-            Start Teaching →
-          </button>
-        </div>
-      </section>
-
-      {/* FOOTER */}
-      <footer className="footer">
-        <div className="footer-container">
-          <div className="footer-brand">
-            <span className="brand-logo">✦</span>
-            <h4>Curio</h4>
-            <p>Learn by explaining.</p>
-          </div>
-
-          <div className="footer-columns">
-            <div className="footer-col">
-              <h5>Product</h5>
-              <button className="footer-link-btn" onClick={scrollToHowItWorks}>
-                How it works
-              </button>
-              <button className="footer-link-btn" onClick={onStart}>
-                Start Teaching
-              </button>
-            </div>
-            <div className="footer-col">
-              <h5>Resources</h5>
-              <a href="https://github.com/Nimalan07/curio-ai.git" target="_blank" rel="noreferrer">
-                GitHub Repository
-              </a>
-              <a href="http://localhost:8000/docs" target="_blank" rel="noreferrer">
-                API Docs
-              </a>
-            </div>
-          </div>
-        </div>
-        <div className="footer-bottom">
-          <p>© 2026 Curio AI. All rights reserved.</p>
-        </div>
-      </footer>
     </div>
   );
 }
