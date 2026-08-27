@@ -50,6 +50,26 @@ class StudentAgent:
             }
         ]
 
+        # RAG Integration: Retrieve relevant ground-truth facts if gate matches
+        from core.knowledge_gate import should_retrieve_knowledge
+        from core.knowledge_retriever import retrieve_knowledge_context
+
+        last_user_message = ""
+        for msg in reversed(messages):
+            if msg.get("role") == "user":
+                last_user_message = msg.get("content", "")
+                break
+
+        knowledge_context = ""
+        if last_user_message and should_retrieve_knowledge(topic, last_user_message):
+            knowledge_context = retrieve_knowledge_context(topic, last_user_message)
+
+        if knowledge_context:
+            prompt_messages.append({
+                "role": "system",
+                "content": knowledge_context
+            })
+
         prompt_messages.append({
             "role": "system",
             "content": f"The current topic is: {topic}"

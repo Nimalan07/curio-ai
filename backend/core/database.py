@@ -69,6 +69,46 @@ def init_db():
     )
     """)
     
+    # Create knowledge_chunks table
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS knowledge_chunks (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        topic TEXT,
+        content TEXT,
+        embedding TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+    """)
+    
+    conn.commit()
+    conn.close()
+
+# Knowledge Helpers
+def save_knowledge_chunk(topic, content, embedding_json=None):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        "INSERT INTO knowledge_chunks (topic, content, embedding) VALUES (?, ?, ?)",
+        (topic.lower().strip(), content, embedding_json)
+    )
+    conn.commit()
+    conn.close()
+
+def get_knowledge_chunks(topic):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM knowledge_chunks WHERE topic = ?", (topic.lower().strip(),))
+    rows = cursor.fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+def clear_knowledge_chunks(topic=None):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    if topic:
+        cursor.execute("DELETE FROM knowledge_chunks WHERE topic = ?", (topic.lower().strip(),))
+    else:
+        cursor.execute("DELETE FROM knowledge_chunks")
     conn.commit()
     conn.close()
 
