@@ -107,3 +107,54 @@ def query_vector_store(topic: str, query: str, top_k: int = 3) -> list[dict]:
     scored_chunks.sort(key=lambda x: x[0], reverse=True)
     
     return [item[1] for item in scored_chunks[:top_k] if item[0] > 0.0]
+
+def search_knowledge(topic: str, query: str, top_k: int = 5) -> list[dict]:
+    """
+    Search the SQLite knowledge base for the topic.
+    Returns a list of dicts containing:
+      - 'content': the text chunk
+      - 'similarity': float score [0.0, 1.0]
+      - 'topic': the topic name
+    """
+    chunks = get_knowledge_chunks(topic)
+    if not chunks:
+        return []
+
+    # Try neural search first
+    query_embedding = get_ollama_embedding(query)
+    if query_embedding:
+        scored_chunks = []
+        for chunk in chunks:
+            if chunk.get("embedding"):
+                try:
+                    chunk_emb = json.loads(chunk["embedding"])
+                    sim = cosine_similarity(query_embedding, chunk_emb)
+                    scored_chunks.append((sim, chunk))
+                except Exception:
+                    pass
+        if scored_chunks:
+            scored_chunks.sort(key=lambda x: x[0], reverse=True)
+            results = []
+            for sim, chunk in scored_chunks[:top_k]:
+                results.append({
+                    "content": chunk["content"],
+                    "similarity": sim,
+                    "topic": chunk["topic"]
+                })
+            return results
+
+    # Fallback: TF-IDF text search
+    doc_contents = [chunk["content"] for chunk in chunks]
+    similarities = compute_tfidf_similarity(query, doc_contents)
+    
+    scored_chunks = list(zip(similarities, chunks))
+    scored_chunks.sort(key=lambda x: x[0], reverse=True)
+    
+    results = []
+    for sim, chunk in scored_chunks[:top_k]:
+        results.append({
+            "content": chunk["content"],
+            "similarity": sim,
+            "topic": chunk["topic"]
+        })
+    return results

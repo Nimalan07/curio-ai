@@ -140,6 +140,8 @@ def send_message(request: MessageRequest, authorization: str = Header(None)):
         "success": True,
         "question": reply["question"],
         "reason": reply.get("reason", "I noticed a part of your explanation that needs clarification."),
+        "knowledge_used": reply.get("knowledge_used", False),
+        "knowledge_similarity": reply.get("knowledge_similarity", 0.0),
         "turn_count": session["turn_count"] + 1
     }
 

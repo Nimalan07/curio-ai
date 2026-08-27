@@ -43,37 +43,43 @@ class StudentAgent:
             return None
 
     def generate_response(self, topic, messages):
-        prompt_messages = [
-            {
-                "role": "system",
-                "content": self.system_prompt
-            }
-        ]
-
-        # RAG Integration: Retrieve relevant ground-truth facts if gate matches
-        from core.knowledge_gate import should_retrieve_knowledge
-        from core.knowledge_retriever import retrieve_knowledge_context
-
+        # Extract the latest user message
         last_user_message = ""
         for msg in reversed(messages):
             if msg.get("role") == "user":
                 last_user_message = msg.get("content", "")
                 break
 
-        knowledge_context = ""
-        if last_user_message and should_retrieve_knowledge(topic, last_user_message):
-            knowledge_context = retrieve_knowledge_context(topic, last_user_message)
+        # RAG Gating: Retrieve relevant ground-truth facts if gate matches
+        from core.knowledge_retriever import get_relevant_knowledge
+        
+        knowledge = get_relevant_knowledge(
+            topic=topic,
+            student_message=last_user_message,
+            messages=messages,
+            top_k=3
+        )
 
-        if knowledge_context:
-            prompt_messages.append({
+        system_prompt = self.system_prompt
+        
+        if knowledge["used"]:
+            system_prompt += (
+                f"\n\nLOCAL KNOWLEDGE CONTEXT:\n{knowledge['context']}\n\n"
+                "Use this context to ground your reasoning. "
+                "Do not mention that you retrieved this context. "
+                "Do not quote it unnecessarily.\n"
+            )
+
+        prompt_messages = [
+            {
                 "role": "system",
-                "content": knowledge_context
-            })
-
-        prompt_messages.append({
-            "role": "system",
-            "content": f"The current topic is: {topic}"
-        })
+                "content": system_prompt
+            },
+            {
+                "role": "system",
+                "content": f"The current topic is: {topic}"
+            }
+        ]
 
         prompt_messages.extend(messages)
 
@@ -81,9 +87,16 @@ class StudentAgent:
 
         parsed = self._extract_json(response)
         if parsed and isinstance(parsed, dict) and "question" in parsed:
-            return parsed
+            return {
+                "question": parsed["question"],
+                "reason": parsed.get("reason", "I noticed a part of your explanation that needs clarification."),
+                "knowledge_used": knowledge["used"],
+                "knowledge_similarity": knowledge["similarity"]
+            }
 
         return {
             "question": response,
-            "reason": "I noticed a part of your explanation that needs clarification."
+            "reason": "I want to understand your reasoning more deeply.",
+            "knowledge_used": knowledge["used"],
+            "knowledge_similarity": knowledge["similarity"]
         }

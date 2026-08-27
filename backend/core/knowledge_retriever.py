@@ -1,23 +1,66 @@
-from rag.vector_store import query_vector_store
+from core.knowledge_gate import check_knowledge_relevance
 
-def retrieve_knowledge_context(topic: str, query: str, top_k: int = 2) -> str:
+def build_retrieval_query(messages: list[dict], latest_message: str) -> str:
     """
-    Searches the knowledge base for relevant facts and formats them as system context.
+    Compiles recent conversation logs with the student's latest message
+    to form a rich, context-aware query for similarity matching.
     """
-    matched_chunks = query_vector_store(topic, query, top_k)
+    recent_messages = messages[-6:] if messages else []
     
-    if not matched_chunks:
-        return ""
-        
-    context_lines = []
-    for idx, chunk in enumerate(matched_chunks):
-        context_lines.append(f"- {chunk['content']}")
-        
-    context_block = "\n".join(context_lines)
+    # Exclude system/assistant metadata to focus on learning statements
+    user_context = [
+        f"{m['role']}: {m['content']}" 
+        for m in recent_messages 
+        if m.get("role") in ["user", "assistant"]
+    ]
+    
+    conversation_context = "\n".join(user_context)
+    
     return (
-        "\n--- RETRIEVED GROUND-TRUTH KNOWLEDGE ---\n"
-        "Here are verified facts about the topic. Use these internally to verify the student's "
-        "statements and guide your questioning, but do not lecture or output these directly:\n"
-        f"{context_block}\n"
-        "-----------------------------------------\n"
+        f"Topic conversation context:\n{conversation_context}\n\n"
+        f"Latest student statement:\n{latest_message}\n\n"
+        "Retrieve factual knowledge matching this discussion."
     )
+
+def get_relevant_knowledge(topic: str, student_message: str, messages: list[dict] = None, top_k: int = 3) -> dict:
+    """
+    Checks the semantic knowledge gate and retrieves matching chunks.
+    """
+    if messages is None:
+        messages = []
+        
+    retrieval_query = build_retrieval_query(messages, student_message)
+    
+    gate_result = check_knowledge_relevance(topic, retrieval_query, top_k=top_k)
+    
+    if not gate_result["should_retrieve"]:
+        return {
+            "used": False,
+            "similarity": gate_result["similarity"],
+            "context": "",
+            "sources": []
+        }
+        
+    context_parts = []
+    sources = []
+    
+    for result in gate_result["results"]:
+        document = result["document"]
+        similarity = result["similarity"]
+        
+        context_parts.append(
+            f"[Knowledge relevance: {similarity}]\n{document}"
+        )
+        sources.append({
+            "similarity": similarity,
+            "document": document
+        })
+        
+    context = "\n\n".join(context_parts)
+    
+    return {
+        "used": True,
+        "similarity": gate_result["similarity"],
+        "context": context,
+        "sources": sources
+    }
