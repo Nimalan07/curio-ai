@@ -1,0 +1,7 @@
+Calculus is a branch of mathematics focused on limits, functions, derivatives, integrals, and infinite series. It has two main branches: differential calculus and integral calculus.
+
+Differential calculus is concerned with the study of the rates at which quantities change. It is centered around the concept of the derivative, which represents the instantaneous rate of change of a function.
+
+Integral calculus is concerned with the accumulation of quantities, such as the area under a curve, and is centered around the concept of the integral, which is the mathematical reverse process of the derivative.
+
+The Fundamental Theorem of Calculus states that differentiation and integration are inverse operations, connecting the two main branches of calculus.

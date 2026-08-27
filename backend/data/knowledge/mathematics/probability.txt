@@ -1,0 +1,9 @@
+Probability theory is the branch of mathematics concerned with the analysis of random phenomena.
+
+The probability of an event is a number between 0 and 1, where 0 indicates impossibility and 1 indicates certainty. The sum of the probabilities of all possible mutually exclusive outcomes in a sample space is always equal to 1.
+
+A random variable is a variable whose value is subject to variations due to chance. It can be discrete (taking distinct, countable values) or continuous (taking any value within an interval).
+
+A probability distribution describes how the probabilities are distributed over the values of the random variable. Examples include the Normal (Gaussian) distribution, Binomial distribution, and Poisson distribution.
+
+Two events are independent if the occurrence of one does not affect the probability of occurrence of the other. The joint probability of independent events is the product of their individual probabilities.

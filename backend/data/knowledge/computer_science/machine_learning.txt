@@ -1,0 +1,9 @@
+Machine Learning is a branch of artificial intelligence focused on building systems that learn from data, identify patterns, and make decisions or predictions with minimal human intervention.
+
+Supervised learning involves training a model on a labeled dataset, where each training example is paired with its correct output label, enabling the model to learn a mapping function from input to output.
+
+Unsupervised learning deals with unlabeled data. The goal is to find hidden structures, clusters, or patterns in the data without explicit guidance (e.g., K-means clustering, Principal Component Analysis).
+
+Neural Networks are computational models inspired by the human brain. They consist of layers of interconnected nodes (neurons) that process inputs, apply weights and activation functions, and produce outputs.
+
+Gradient descent is an optimization algorithm used to minimize a model's loss function. It iteratively adjusts the model's parameters (weights and biases) in the direction of the steepest descent of the loss.

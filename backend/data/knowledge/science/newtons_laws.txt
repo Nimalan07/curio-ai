@@ -1,0 +1,9 @@
+Newton's Laws of Motion describe the relationship between a body and the forces acting upon it, and its motion in response to those forces.
+
+Newton's First Law of Motion (Law of Inertia) states that an object at rest will stay at rest, and an object in motion will continue in motion at a constant velocity, unless acted upon by a net external force. Inertia is the inherent property of matter to resist any changes in its state of motion. Mass is a quantitative measure of an object's inertia.
+
+Newton's Second Law of Motion states that the acceleration of an object is directly proportional to the net force acting on it and inversely proportional to its mass. Mathematically, Force equals mass times acceleration (F = ma).
+
+Newton's Third Law of Motion states that for every action, there is an equal and opposite reaction. This means that forces always occur in matched pairs: if object A exerts force on object B, B exerts an equal force in the opposite direction on A.
+
+Momentum is the product of an object's mass and its velocity (p = mv). In the absence of external forces, the total momentum of a closed system is conserved.

@@ -1,0 +1,9 @@
+Photosynthesis is the biological process by which plants, algae, and some bacteria convert light energy into chemical energy, producing glucose and oxygen from carbon dioxide and water.
+
+The light-dependent reactions take place in the thylakoid membranes of chloroplasts. Chlorophyll absorbs sunlight and uses it to split water molecules, releasing oxygen and generating energy carrier molecules: ATP (adenosine triphosphate) and NADPH.
+
+The Calvin cycle (light-independent reactions) occurs in the stroma of chloroplasts. It uses the ATP and NADPH generated in the light-dependent stage to fix carbon dioxide into organic sugar molecules (glucose).
+
+Chlorophyll is the primary green pigment in chloroplasts that absorbs light energy, primarily in the blue and red wavelengths, while reflecting green light.
+
+Stomata are tiny pores on the undersides of leaves that regulate gas exchange, allowing carbon dioxide to enter for photosynthesis and oxygen/water vapor to exit the plant.

@@ -1,0 +1,9 @@
+An Array is a contiguous linear data structure that stores elements of the same type, allowing constant-time O(1) random access to elements using an index.
+
+A Linked List consists of nodes where each node contains data and a pointer (or reference) to the next node. Elements are not stored in contiguous memory, making insertions and deletions O(1) but access O(N).
+
+Trees are hierarchical, non-linear structures consisting of nodes connected by edges. A Binary Search Tree (BST) maintains sorted order: elements smaller than the parent go left, larger elements go right.
+
+A Hash Table stores key-value pairs and uses a hash function to map keys to indexes in an array, offering average-time O(1) complexity for search, insert, and delete operations.
+
+Big O notation is a mathematical representation used to describe the asymptotic limiting behavior of an algorithm, measuring its time or space complexity as input size grows.
