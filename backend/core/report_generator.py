@@ -41,7 +41,23 @@ Analyze this conversation and return ONLY valid JSON.
             }
         ])
 
-        return self._parse(response, topic, confidence)
+        report_data = self._parse(response, topic, confidence)
+        
+        # Enforce mathematical calculation of overall_score and confidence_gap
+        try:
+            clarity = float(report_data.get("clarity_score", 0) or 0)
+            completeness = float(report_data.get("completeness_score", 0) or 0)
+            accuracy = float(report_data.get("accuracy_score", 0) or 0)
+            depth = float(report_data.get("depth_score", 0) or 0)
+            
+            overall = round((clarity + completeness + accuracy + depth) / 4.0, 1)
+            report_data["overall_score"] = overall
+            report_data["student_confidence"] = float(confidence)
+            report_data["confidence_gap"] = round(abs(float(confidence) - overall), 1)
+        except Exception as e:
+            print(f"[Report Score Calculator] Math enforcement failed: {e}")
+            
+        return report_data
 
     def _parse(self, response, topic, confidence):
         cleaned = response.strip()

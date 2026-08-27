@@ -124,7 +124,7 @@ function Home({ onStart, user, onLogout }) {
                   <div className="mock-message curio">
                     <div className="mock-avatar curio-av">✦</div>
                     <div className="mock-bubble">
-                      Great start! But what happens to the sunlight after the plant
+                      Okay — what happens to the sunlight after the plant
                       captures it?
                       <details className="mock-why">
                         <summary>Why I asked this</summary>
@@ -209,11 +209,6 @@ function Home({ onStart, user, onLogout }) {
                   <text x="56" y="61" textAnchor="middle" fontSize="6.5" fill="#0F172A" fontWeight="bold">6.0</text>
                 </svg>
               </div>
-            </div>
-
-            {/* MASCOT */}
-            <div className="mockup-mascot-wrapper">
-              <img src="/mascot.png" alt="Curio mascot" className="mascot-img" />
             </div>
           </div>
         </div>
