@@ -8,13 +8,54 @@ import Dashboard from "./pages/Dashboard";
 import { getCompletedReport, getSession, logoutApi } from "./api/curioApi";
 
 function App() {
-  const [page, setPage] = useState("home");
-  const [topic, setTopic] = useState("");
-  const [sessionId, setSessionId] = useState("");
-  const [report, setReport] = useState(null);
-  const [user, setUser] = useState(null);
-  const [initialMessages, setInitialMessages] = useState([]);
-  const [initialTurns, setInitialTurns] = useState(0);
+  const [page, setPage] = useState(() => localStorage.getItem("curio_page") || "home");
+  const [topic, setTopic] = useState(() => localStorage.getItem("curio_topic") || "");
+  const [sessionId, setSessionId] = useState(() => localStorage.getItem("curio_session_id") || "");
+  const [report, setReport] = useState(() => {
+    const stored = localStorage.getItem("curio_report");
+    return stored ? JSON.parse(stored) : null;
+  });
+  const [user, setUser] = useState(() => {
+    const storedUser = localStorage.getItem("curio_user");
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
+  const [initialMessages, setInitialMessages] = useState(() => {
+    const stored = localStorage.getItem("curio_initial_messages");
+    return stored ? JSON.parse(stored) : [];
+  });
+  const [initialTurns, setInitialTurns] = useState(() => {
+    const stored = localStorage.getItem("curio_initial_turns");
+    return stored ? Number(stored) : 0;
+  });
+
+  // Sync states to localStorage
+  useEffect(() => {
+    localStorage.setItem("curio_page", page);
+  }, [page]);
+
+  useEffect(() => {
+    localStorage.setItem("curio_topic", topic);
+  }, [topic]);
+
+  useEffect(() => {
+    localStorage.setItem("curio_session_id", sessionId);
+  }, [sessionId]);
+
+  useEffect(() => {
+    if (report) {
+      localStorage.setItem("curio_report", JSON.stringify(report));
+    } else {
+      localStorage.removeItem("curio_report");
+    }
+  }, [report]);
+
+  useEffect(() => {
+    localStorage.setItem("curio_initial_messages", JSON.stringify(initialMessages));
+  }, [initialMessages]);
+
+  useEffect(() => {
+    localStorage.setItem("curio_initial_turns", String(initialTurns));
+  }, [initialTurns]);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -34,7 +75,13 @@ function App() {
       const storedUser = localStorage.getItem("curio_user");
       if (storedToken && storedUser) {
         setUser(JSON.parse(storedUser));
-        setPage("topic");
+        const savedPage = localStorage.getItem("curio_page");
+        if (!savedPage || savedPage === "home" || savedPage === "login") {
+          setPage("topic");
+        }
+      } else {
+        // If not logged in, force them to home or login page
+        setPage((prev) => (prev === "login" ? "login" : "home"));
       }
     }
   }, []);
@@ -59,6 +106,12 @@ function App() {
     await logoutApi();
     setUser(null);
     setPage("home");
+    localStorage.removeItem("curio_page");
+    localStorage.removeItem("curio_topic");
+    localStorage.removeItem("curio_session_id");
+    localStorage.removeItem("curio_report");
+    localStorage.removeItem("curio_initial_messages");
+    localStorage.removeItem("curio_initial_turns");
   }
 
   function handleStartSession(selectedTopic, id, conf) {
