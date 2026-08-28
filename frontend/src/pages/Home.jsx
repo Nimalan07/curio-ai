@@ -357,27 +357,51 @@ function Home({ onStart, user, onLogout, onDashboard }) {
 
           <div className="features-card-grid">
             <div className="feature-block-card">
-              <div className="feature-block-icon b-blue">💬</div>
-              <h3>Teach in your own words</h3>
-              <p>Explain a concept naturally, just like you would teach it to a friend.</p>
+              <div className="feature-block-icon b-blue">🎯</div>
+              <h3>Confidence Gap Mapping</h3>
+              <p>Rate your confidence (1-10) pre-session. Curio compares it to objective metrics, showing where you're overconfident or under-confident.</p>
               <span className="feature-block-arrow">→</span>
             </div>
             <div className="feature-block-card">
-              <div className="feature-block-icon b-green">✦</div>
-              <h3>Curio asks smart questions</h3>
-              <p>Our AI student asks follow-ups whenever your explanation is vague, incomplete, or contradictory.</p>
+              <div className="feature-block-icon b-green">⚙️</div>
+              <h3>Adaptive Difficulty Tuning</h3>
+              <p>Change difficulty between Beginner, Clarifying, and Deep Dive levels to dynamically shift the AI student's inquiry depth.</p>
               <span className="feature-block-arrow">→</span>
             </div>
             <div className="feature-block-card">
-              <div className="feature-block-icon b-yellow">⌁</div>
-              <h3>Discover your gaps</h3>
-              <p>See exactly where your understanding becomes uncertain or breaks down.</p>
+              <div className="feature-block-icon b-yellow">🔍</div>
+              <h3>Cognitive Transparency</h3>
+              <p>Toggle "Why I Asked This" on any response to check Curio's internal reasoning and see what gap in your words triggered it.</p>
               <span className="feature-block-arrow">→</span>
             </div>
             <div className="feature-block-card">
-              <div className="feature-block-icon b-purple">▣</div>
-              <h3>Get your report</h3>
-              <p>Receive scores, misconceptions, gaps and specific topics to review.</p>
+              <div className="feature-block-icon b-purple">⇄</div>
+              <h3>TeachBack Evaluation</h3>
+              <p>Get a detailed side-by-side comparison of your explanation with an ideal model, outlining covered points and key omissions.</p>
+              <span className="feature-block-arrow">→</span>
+            </div>
+            <div className="feature-block-card">
+              <div className="feature-block-icon b-yellow">⚠️</div>
+              <h3>Misconception Pattern Detection</h3>
+              <p>Instantly flag incorrect claims with severity tags, specific evidence from the chat, explanation, and key concepts to review.</p>
+              <span className="feature-block-arrow">→</span>
+            </div>
+            <div className="feature-block-card">
+              <div className="feature-block-icon b-blue">⬡</div>
+              <h3>Understanding Radar Charts</h3>
+              <p>Visualize the four pillars of understanding—Clarity, Completeness, Accuracy, and Depth—using Recharts radar charts.</p>
+              <span className="feature-block-arrow">→</span>
+            </div>
+            <div className="feature-block-card">
+              <div className="feature-block-icon b-green">↗</div>
+              <h3>Growth Tracking Dashboard</h3>
+              <p>Analyze your progress over time, tracking your average scores and learning graph across all active sessions.</p>
+              <span className="feature-block-arrow">→</span>
+            </div>
+            <div className="feature-block-card">
+              <div className="feature-block-icon b-purple">📥</div>
+              <h3>Offline Report Downloads</h3>
+              <p>Export your full Understanding Report Card as a high-fidelity PNG image with a single click for offline reference.</p>
               <span className="feature-block-arrow">→</span>
             </div>
           </div>
