@@ -434,7 +434,7 @@ function Home({ onStart, user, onLogout, onDashboard }) {
           <div className="footer-brand-side">
             <div className="brand">
               <div className="brand-logo-container" style={{ overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <img src="/logo1.jpeg" alt="Curio Logo" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                <img src="/logo1.png" alt="Curio Logo" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
               </div>
               <span className="brand-text">Curio</span>
             </div>

@@ -69,7 +69,7 @@ export default function Login({ onSuccess, onBack }) {
           onClick={onBack}
         >
           <div className="curio-logo" style={{ overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <img src="/logo1.jpeg" alt="Curio Logo" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            <img src="/logo1.png" alt="Curio Logo" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
           </div>
           <span>Curio</span>
         </div>
