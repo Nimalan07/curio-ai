@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./Login.css";
+import GoogleIcon from "../components/GoogleIcon";
 
 const API_URL = "http://localhost:8000";
 
@@ -67,8 +68,8 @@ export default function Login({ onSuccess, onBack }) {
           className="curio-brand"
           onClick={onBack}
         >
-          <div className="curio-logo">
-            ✦
+          <div className="curio-logo" style={{ overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <img src="/logo1.jpeg" alt="Curio Logo" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
           </div>
           <span>Curio</span>
         </div>
@@ -151,10 +152,10 @@ export default function Login({ onSuccess, onBack }) {
 
             {/* Google */}
             <button
-              className="google-button"
+              className="google-btn"
               onClick={handleGoogleLogin}
             >
-              <span className="google-icon">G</span>
+              <GoogleIcon size={21} />
               <span>Continue with Google</span>
             </button>
 

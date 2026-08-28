@@ -223,33 +223,36 @@
 
 /* GOOGLE */
 
-.google-button {
-  height: 52px;
+.google-btn {
   width: 100%;
-  border-radius: 13px;
-  border: 1px solid #e2e8f0;
-  background: #fff;
+  height: 64px;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 11px;
-  font-size: 14px;
-  font-weight: 700;
-  color: #334155;
-  cursor: pointer;
-  transition: 0.2s;
-}
+  gap: 14px;
 
-.google-button:hover {
-  background: var(--cream);
-  border-color: #cbd5e1;
-  transform: translateY(-1px);
-}
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 16px;
 
-.google-icon {
+  color: #0f172a;
   font-size: 18px;
-  font-weight: 800;
-  color: #4285f4;
+  font-weight: 650;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.google-btn:hover {
+  background: #ffffff;
+  border-color: #94a3b8;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+}
+
+.google-btn svg {
+  flex-shrink: 0;
 }
 
 /* DIVIDER */

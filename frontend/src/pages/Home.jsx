@@ -433,18 +433,8 @@ function Home({ onStart, user, onLogout, onDashboard }) {
         <div className="footer-columns-wrapper">
           <div className="footer-brand-side">
             <div className="brand">
-              <div className="brand-logo-container">
-                <svg
-                  className="brand-spark"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12 2C12 7.5 7.5 12 2 12C7.5 12 12 16.5 12 22C12 16.5 16.5 12 22 12C16.5 12 12 7.5 12 2Z"
-                    fill="currentColor"
-                  />
-                </svg>
+              <div className="brand-logo-container" style={{ overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <img src="/logo1.jpeg" alt="Curio Logo" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
               </div>
               <span className="brand-text">Curio</span>
             </div>
