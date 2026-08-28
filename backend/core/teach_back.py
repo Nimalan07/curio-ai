@@ -1,3 +1,4 @@
+import json
 from core.llm_client import get_llm
 
 TEACH_BACK_PROMPT = """
