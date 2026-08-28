@@ -72,145 +72,18 @@ function Home({ onStart, user, onLogout, onDashboard }) {
 
           </div>
 
-          {/* RIGHT COLUMN: INTERACTIVE MOCKUP */}
+          {/* RIGHT COLUMN: REAL APPLICATION SCREENSHOT */}
           <div className="hero-visual">
-            <div className="mockup-chat-container">
-              {/* HEADER */}
-              <div className="mockup-header">
-                <div className="mockup-brand">
-                  <div className="mockup-logo-icon">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path
-                        d="M12 2C12 7.5 7.5 12 2 12C7.5 12 12 16.5 12 22C12 16.5 16.5 12 22 12C16.5 12 12 7.5 12 2Z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </div>
-                  <span>Curio</span>
-                </div>
-                <div className="mockup-status">
-                  <span className="status-dot"></span>
-                  Session in progress
-                </div>
-              </div>
-
-              {/* BODY */}
-              <div className="mockup-body">
-                <div className="mockup-topic">
-                  <small>TEACHING SESSION</small>
-                  <h3>Photosynthesis</h3>
-                </div>
-                <div className="mockup-progress-row">
-                  <div className="mockup-progress-bar">
-                    <div className="fill" style={{ width: "66%" }}></div>
-                  </div>
-                  <span>4 / 6 turns</span>
-                </div>
-
-                {/* MESSAGES */}
-                <div className="mockup-messages">
-                  <div className="mock-message user">
-                    <div className="mock-avatar">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: "12px", height: "12px" }}>
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                        <circle cx="12" cy="7" r="4" />
-                      </svg>
-                    </div>
-                    <div className="mock-bubble">
-                      Photosynthesis is the process by which plants use sunlight,
-                      carbon dioxide and water to make their own food.
-                    </div>
-                  </div>
-
-                  <div className="mock-message curio">
-                    <div className="mock-avatar curio-av">✦</div>
-                    <div className="mock-bubble">
-                      Okay — what happens to the sunlight after the plant
-                      captures it?
-                      <details className="mock-why">
-                        <summary>Why I asked this</summary>
-                        <p>
-                          The explanation mentions sunlight but does not explain
-                          how the captured energy is used.
-                        </p>
-                      </details>
-                    </div>
-                  </div>
-
-                  <div className="mock-message user">
-                    <div className="mock-avatar">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: "12px", height: "12px" }}>
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                        <circle cx="12" cy="7" r="4" />
-                      </svg>
-                    </div>
-                    <div className="mock-bubble">
-                      The sunlight gives energy to the plant so it can produce
-                      glucose.
-                    </div>
-                  </div>
-                </div>
-
-                {/* INPUT */}
-                <div className="mockup-input">
-                  <span className="input-placeholder">Type your explanation here...</span>
-                  <div className="input-controls">
-                    <div className="left-icons">
-                      <span className="icon-mic">🎙</span>
-                      <span className="icon-clip">📎</span>
-                    </div>
-                    <button className="send-btn">
-                      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M2.01 21L23 12L2.01 3L2 10L17 12L2 14L2.01 21Z"
-                          fill="currentColor"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* OVERLAPPING METRICS CARD */}
-            <div className="mockup-metrics-card">
-              <h4>Understanding Preview</h4>
-              <div className="overall-score-preview">
-                <strong>6.8</strong>
-                <span>/ 10</span>
-              </div>
-              <p className="overall-label">Overall Understanding</p>
-
-              {/* STATIC MINI RADAR CHART SVG */}
-              <div className="mockup-radar-svg">
-                <svg viewBox="0 0 170 130" width="100%" height="100%">
-                  {/* Grid Circles */}
-                  <circle cx="85" cy="65" r="40" fill="none" stroke="#E2E8F0" strokeWidth="1" />
-                  <circle cx="85" cy="65" r="25" fill="none" stroke="#E2E8F0" strokeWidth="1" />
-                  <circle cx="85" cy="65" r="10" fill="none" stroke="#E2E8F0" strokeWidth="1" />
-                  {/* Axis lines */}
-                  <line x1="85" y1="25" x2="85" y2="105" stroke="#E2E8F0" strokeWidth="1" />
-                  <line x1="45" y1="65" x2="125" y2="65" stroke="#E2E8F0" strokeWidth="1" />
-                  {/* Labels */}
-                  <text x="85" y="18" textAnchor="middle" fontSize="7" fontWeight="700" fill="#64748B">Clarity</text>
-                  <text x="130" y="67" textAnchor="start" fontSize="7" fontWeight="700" fill="#64748B">Completeness</text>
-                  <text x="85" y="118" textAnchor="middle" fontSize="7" fontWeight="700" fill="#64748B">Accuracy</text>
-                  <text x="40" y="67" textAnchor="end" fontSize="7" fontWeight="700" fill="#64748B">Depth</text>
-                  {/* Blue Polygon */}
-                  <polygon
-                    points="85,37 109,65 85,97 61,65"
-                    fill="rgba(59, 130, 246, 0.15)"
-                    stroke="#3B82F6"
-                    strokeWidth="1.5"
-                  />
-                  {/* Score Text labels */}
-                  <text x="85" y="32" textAnchor="middle" fontSize="6.5" fill="#0F172A" fontWeight="bold">7.0</text>
-                  <text x="114" y="61" textAnchor="middle" fontSize="6.5" fill="#0F172A" fontWeight="bold">6.0</text>
-                  <text x="85" y="93" textAnchor="middle" fontSize="6.5" fill="#0F172A" fontWeight="bold">8.0</text>
-                  <text x="56" y="61" textAnchor="middle" fontSize="6.5" fill="#0F172A" fontWeight="bold">6.0</text>
-                </svg>
-              </div>
-            </div>
+            <img 
+              src="/teach_screenshot.png" 
+              alt="Curio Teach Interface" 
+              style={{
+                width: "100%",
+                borderRadius: "20px",
+                boxShadow: "0 20px 50px rgba(15, 23, 42, 0.12)",
+                border: "1px solid #E2E8F0"
+              }}
+            />
           </div>
         </div>
       </section>
@@ -277,64 +150,16 @@ function Home({ onStart, user, onLogout, onDashboard }) {
 
             {/* METHOD DASHBOARD VISUAL */}
             <div className="method-dashboard-visual">
-              <div className="method-dashboard-card">
-                <div className="dash-top">
-                  <div className="dash-brand">
-                    <div className="dash-logo">✦</div>
-                    <span>Curio</span>
-                  </div>
-                  <div className="dash-badge">Active session</div>
-                </div>
-
-                <div className="dash-body">
-                  <div className="dash-topic">
-                    <small>YOUR TOPIC</small>
-                    <h3>Newton's Laws of Motion</h3>
-                  </div>
-
-                  <div className="dash-progress-row">
-                    <div className="progress-info">
-                      <span>Understanding progress</span>
-                      <strong>68%</strong>
-                    </div>
-                    <div className="big-progress-bar">
-                      <div className="fill" style={{ width: "68%" }}></div>
-                    </div>
-                  </div>
-
-                  <div className="dash-metrics-row">
-                    <div className="metric-badge b-blue">
-                      <span className="badge-icon">💬</span>
-                      <div>
-                        <strong>5</strong>
-                        <small>Questions asked</small>
-                      </div>
-                    </div>
-                    <div className="metric-badge b-green">
-                      <span className="badge-icon">◈</span>
-                      <div>
-                        <strong>3</strong>
-                        <small>Gaps discovered</small>
-                      </div>
-                    </div>
-                    <div className="metric-badge b-purple">
-                      <span className="badge-icon">↗</span>
-                      <div>
-                        <strong>7.2</strong>
-                        <small>Current clarity</small>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="dash-footer-q">
-                    <div className="dash-q-icon">✦</div>
-                    <div>
-                      <small>CURIO IS ASKING</small>
-                      <p>If force is zero, what happens to an object's motion?</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <img 
+                src="/dashboard_screenshot.png" 
+                alt="Curio Growth Tracking Dashboard" 
+                style={{
+                  width: "100%",
+                  borderRadius: "28px",
+                  boxShadow: "0 25px 70px rgba(20, 44, 68, 0.15)",
+                  border: "1px solid #e0e8e4"
+                }}
+              />
             </div>
           </div>
         </div>
@@ -569,68 +394,16 @@ function Home({ onStart, user, onLogout, onDashboard }) {
             </div>
 
             <div className="report-card-visual">
-              <div className="report-card-inner">
-                <div className="report-card-header">
-                  <div>
-                    <small>UNDERSTANDING REPORT</small>
-                    <h3>Photosynthesis</h3>
-                  </div>
-                  <div className="report-score-indicator">
-                    7.2
-                    <span>/10</span>
-                  </div>
-                </div>
-
-                <div className="report-score-bars">
-                  <div className="score-row-item">
-                    <div className="score-row-labels">
-                      <span>Clarity</span>
-                      <strong>8.0</strong>
-                    </div>
-                    <div className="score-row-bar">
-                      <div className="fill" style={{ width: "80%" }}></div>
-                    </div>
-                  </div>
-                  <div className="score-row-item">
-                    <div className="score-row-labels">
-                      <span>Completeness</span>
-                      <strong>6.0</strong>
-                    </div>
-                    <div className="score-row-bar">
-                      <div className="fill" style={{ width: "60%" }}></div>
-                    </div>
-                  </div>
-                  <div className="score-row-item">
-                    <div className="score-row-labels">
-                      <span>Accuracy</span>
-                      <strong>8.0</strong>
-                    </div>
-                    <div className="score-row-bar">
-                      <div className="fill" style={{ width: "80%" }}></div>
-                    </div>
-                  </div>
-                  <div className="score-row-item">
-                    <div className="score-row-labels">
-                      <span>Depth</span>
-                      <strong>7.0</strong>
-                    </div>
-                    <div className="score-row-bar">
-                      <div className="fill" style={{ width: "70%" }}></div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="report-warning-box">
-                  <span className="warning-icon">!</span>
-                  <div>
-                    <strong>Misconception detected</strong>
-                    <p>
-                      You connected sunlight directly to glucose production without
-                      explaining the intermediate energy conversion.
-                    </p>
-                  </div>
-                </div>
-              </div>
+              <img 
+                src="/results_screenshot.png" 
+                alt="Curio Understanding Report" 
+                style={{
+                  width: "100%",
+                  borderRadius: "25px",
+                  boxShadow: "0 25px 70px rgba(20, 44, 68, 0.15)",
+                  border: "1px solid #e1e8e4"
+                }}
+              />
             </div>
           </div>
         </div>
