@@ -168,9 +168,9 @@ export default function GrowthDashboard() {
             <Line
               type="monotone"
               dataKey="score"
-              stroke="#0068D4"
+              stroke="#108A93"
               strokeWidth={3}
-              dot={{ r: 5, fill: "#0068D4", strokeWidth: 2, stroke: "#FFFFFF" }}
+              dot={{ r: 5, fill: "#108A93", strokeWidth: 2, stroke: "#FFFFFF" }}
               activeDot={{ r: 7 }}
             />
 

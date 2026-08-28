@@ -55,8 +55,8 @@ export default function RadarChart({
           <Radar
             name="Understanding"
             dataKey="score"
-            stroke="#1976D2"
-            fill="#1976D2"
+            stroke="#108A93"
+            fill="#108A93"
             fillOpacity={0.18}
           />
 

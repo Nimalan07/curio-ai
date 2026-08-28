@@ -1,7 +1,7 @@
 .login-page {
   min-height: 100vh;
-  background: #f8fafc;
-  color: #0f172a;
+  background: var(--cream);
+  color: #122326;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
@@ -36,7 +36,7 @@
   justify-content: center;
   color: white;
   font-size: 21px;
-  background: linear-gradient(135deg, #1976d2, #36a86a);
+  background: linear-gradient(135deg, #108A93, #26a69a);
 }
 
 .back-home {
@@ -44,13 +44,13 @@
   background: transparent;
   font-size: 14px;
   font-weight: 600;
-  color: #64748b;
+  color: #52666a;
   cursor: pointer;
   transition: color 0.2s;
 }
 
 .back-home:hover {
-  color: #1976d2;
+  color: #108A93;
 }
 
 /* MAIN */
@@ -117,7 +117,7 @@
       #e0f2fe,
       transparent 32%
     ),
-    #f8fafc;
+    #edf5f5;
   text-align: left;
 }
 
@@ -143,16 +143,16 @@
   font-size: clamp(44px, 5vw, 65px);
   line-height: 0.98;
   letter-spacing: -3px;
-  color: #0f172a;
+  color: #122326;
 }
 
 .login-intro h1 span {
-  color: #36a86a;
+  color: #26a69a;
 }
 
 .login-intro > p {
   max-width: 470px;
-  color: #475569;
+  color: #52666a;
   line-height: 1.75;
   font-size: 16px;
 }
@@ -181,7 +181,7 @@
   align-items: center;
   justify-content: center;
   background: #fff;
-  color: #1976d2;
+  color: #108A93;
   font-weight: 800;
   box-shadow: 0 5px 20px rgba(15, 23, 42, 0.05);
 }
@@ -194,7 +194,7 @@
 
 .learning-point span {
   display: block;
-  color: #64748b;
+  color: #52666a;
   font-size: 13px;
 }
 
@@ -212,12 +212,12 @@
   margin: 0;
   font-size: 32px;
   letter-spacing: -1px;
-  color: #0f172a;
+  color: #122326;
 }
 
 .form-heading p {
   margin: 9px 0 28px;
-  color: #64748b;
+  color: #52666a;
   font-size: 14px;
 }
 
@@ -241,7 +241,7 @@
 }
 
 .google-button:hover {
-  background: #f8fafc;
+  background: var(--cream);
   border-color: #cbd5e1;
   transform: translateY(-1px);
 }
@@ -295,13 +295,13 @@ form input {
   border-radius: 11px;
   outline: none;
   background: #fff;
-  color: #0f172a;
+  color: #122326;
   font-size: 14px;
   transition: 0.2s;
 }
 
 form input:focus {
-  border-color: #1976d2;
+  border-color: #108A93;
   box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.12);
 }
 
@@ -323,7 +323,7 @@ form input:focus {
   top: 14px;
   border: none;
   background: transparent;
-  color: #1976d2;
+  color: #108A93;
   font-size: 12px;
   font-weight: 700;
   cursor: pointer;
@@ -357,7 +357,7 @@ form input:focus {
 .forgot-password {
   border: none;
   background: transparent;
-  color: #1976d2;
+  color: #108A93;
   font-size: 12px;
   font-weight: 700;
   cursor: pointer;
@@ -369,7 +369,7 @@ form input:focus {
   height: 52px;
   border: none;
   border-radius: 13px;
-  background: linear-gradient(135deg, #1976d2, #36a86a);
+  background: linear-gradient(135deg, #108A93, #26a69a);
   color: white;
   font-size: 15px;
   font-weight: 800;
@@ -404,14 +404,14 @@ form input:focus {
 .switch-mode {
   margin-top: 24px;
   text-align: center;
-  color: #64748b;
+  color: #52666a;
   font-size: 13px;
 }
 
 .switch-mode button {
   border: none;
   background: transparent;
-  color: #1976d2;
+  color: #108A93;
   font-weight: 800;
   cursor: pointer;
   margin-left: 5px;
