@@ -260,8 +260,8 @@ button:disabled {
   margin: 0 auto;
   padding: 0 24px;
   display: grid;
-  grid-template-columns: 0.95fr 1.05fr;
-  gap: 50px;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 60px;
   align-items: center;
 }
 
@@ -374,6 +374,8 @@ button:disabled {
   display: flex;
   flex-direction: column;
   gap: 24px;
+  transform: scale(1.12);
+  transform-origin: center right;
 }
 
 .mockup-chat-container {
