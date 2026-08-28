@@ -1,5 +1,4 @@
-import json
-from core.ollama_client import OllamaClient
+from core.llm_client import get_llm
 
 MISCONCEPTION_PROMPT = """
 You are Curio's misconception detection engine.
@@ -37,7 +36,7 @@ If no misconception exists:
 
 class MisconceptionDetector:
     def __init__(self):
-        self.client = OllamaClient()
+        self.client = get_llm()
 
     def detect_misconceptions(self, topic, messages):
         transcript = ""

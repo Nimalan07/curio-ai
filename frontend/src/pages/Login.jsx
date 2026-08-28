@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./Login.css";
 import GoogleIcon from "../components/GoogleIcon";
 
-const API_URL = "http://localhost:8000";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 export default function Login({ onSuccess, onBack }) {
   const [mode, setMode] = useState("signin");

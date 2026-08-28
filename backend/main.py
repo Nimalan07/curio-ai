@@ -8,7 +8,7 @@ from core.student_agent import StudentAgent
 from core.report_generator import ReportGenerator
 from core.ollama_client import check_ollama
 from auth import router as auth_router
-from config import SESSION_SECRET
+from config import SESSION_SECRET, FRONTEND_URL
 from core.database import get_username_by_token, save_db_report, get_user_sessions, get_db_session
 
 from core.adaptive_engine import update_difficulty, difficulty_name
@@ -30,12 +30,18 @@ app.add_middleware(
     https_only=False
 )
 
+origins = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173"
+]
+if FRONTEND_URL:
+    cleaned_url = FRONTEND_URL.rstrip("/")
+    if cleaned_url not in origins:
+        origins.append(cleaned_url)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "http://127.0.0.1:5173"
-      ],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

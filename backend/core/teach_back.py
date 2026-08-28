@@ -1,5 +1,4 @@
-import json
-from core.ollama_client import OllamaClient
+from core.llm_client import get_llm
 
 TEACH_BACK_PROMPT = """
 You are Curio's educational analysis engine.
@@ -37,7 +36,7 @@ Rules:
 
 class TeachBackEngine:
     def __init__(self):
-        self.client = OllamaClient()
+        self.client = get_llm()
 
     def generate_teach_back(self, topic, messages):
         transcript = ""
