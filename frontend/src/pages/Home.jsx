@@ -78,10 +78,7 @@ function Home({ onStart, user, onLogout, onDashboard }) {
               src="/teach_screenshot.png" 
               alt="Curio Teach Interface" 
               style={{
-                width: "100%",
-                borderRadius: "20px",
-                boxShadow: "0 20px 50px rgba(15, 23, 42, 0.12)",
-                border: "1px solid #E2E8F0"
+                width: "100%"
               }}
             />
           </div>
