@@ -49,6 +49,7 @@ body {
   color: var(--text);
   font-family: "DM Sans", sans-serif;
   line-height: 1.5;
+  overflow-x: hidden;
 }
 
 button,
@@ -374,7 +375,7 @@ button:disabled {
   display: flex;
   flex-direction: column;
   gap: 24px;
-  transform: scale(1.12);
+  transform: scale(1.12) translateX(50px);
   transform-origin: center right;
 }
 
