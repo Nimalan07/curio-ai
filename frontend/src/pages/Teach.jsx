@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ChatWindow from "../components/ChatWindow";
 import ChatInput from "../components/ChatInput";
 import ProgressBar from "../components/ProgressBar";
-import { sendMessage, generateReport, updateDifficultyApi } from "../api/curioApi";
+import { sendMessage, generateReport, updateDifficultyApi, getSession } from "../api/curioApi";
 import AdaptiveDifficulty from "../components/AdaptiveDifficulty";
 
 function Teach({ topic, sessionId, onFinish, onBack, initialMessages, initialTurns }) {
@@ -33,6 +33,38 @@ function Teach({ topic, sessionId, onFinish, onBack, initialMessages, initialTur
   });
 
   const MAX_TURNS = 6;
+
+  useEffect(() => {
+    async function loadSession() {
+      try {
+        setLoading(true);
+        const data = await getSession(sessionId);
+        if (data.success) {
+          if (data.messages && data.messages.length > 0) {
+            setMessages(data.messages.map(msg => ({
+              role: msg.role,
+              content: msg.content,
+              reason: msg.reason || ""
+            })));
+          }
+          setTurns(data.turn_count || 0);
+          if (data.difficulty) {
+            setDifficulty({
+              level: data.difficulty,
+              name: data.difficulty_name || "Clarifying"
+            });
+          }
+        }
+      } catch (err) {
+        console.error("Failed to load session on reload:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    if (sessionId) {
+      loadSession();
+    }
+  }, [sessionId]);
 
   async function handleSend(message) {
     if (!message.trim() || loading) {

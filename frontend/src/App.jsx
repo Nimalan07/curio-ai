@@ -68,7 +68,13 @@ function App() {
       localStorage.setItem("curio_user", JSON.stringify(userData));
       setUser(userData);
       window.history.replaceState({}, document.title, window.location.pathname);
-      setPage("topic");
+      
+      const savedPage = localStorage.getItem("curio_page");
+      if (savedPage && savedPage !== "home" && savedPage !== "login") {
+        setPage(savedPage);
+      } else {
+        setPage("topic");
+      }
     } else {
       // Check if user is already logged in
       const storedToken = localStorage.getItem("curio_token");
@@ -76,12 +82,18 @@ function App() {
       if (storedToken && storedUser) {
         setUser(JSON.parse(storedUser));
         const savedPage = localStorage.getItem("curio_page");
-        if (!savedPage || savedPage === "home" || savedPage === "login") {
+        if (savedPage && savedPage !== "home" && savedPage !== "login") {
+          setPage(savedPage);
+        } else {
           setPage("topic");
         }
       } else {
         // If not logged in, force them to home or login page
-        setPage((prev) => (prev === "login" ? "login" : "home"));
+        setPage((prev) => {
+          const next = prev === "login" ? "login" : "home";
+          localStorage.setItem("curio_page", next);
+          return next;
+        });
       }
     }
   }, []);
