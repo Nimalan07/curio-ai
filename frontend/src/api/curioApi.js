@@ -170,3 +170,66 @@ export async function getSession(sessionId) {
 
   return response.json();
 }
+
+export async function generateTeachBack(sessionId) {
+  const response = await fetch(
+    `${API_URL}/api/session/teach-back`,
+    {
+      method: "POST",
+      headers: getAuthHeaders(),
+      body: JSON.stringify({
+        session_id: sessionId
+      })
+    }
+  );
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(
+      error.detail || "Failed to generate teach-back."
+    );
+  }
+
+  return response.json();
+}
+
+export async function getProgress() {
+  const response = await fetch(
+    `${API_URL}/api/user/progress`,
+    {
+      method: "GET",
+      headers: getAuthHeaders()
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error(
+      "Unable to load learning progress."
+    );
+  }
+
+  return response.json();
+}
+
+export async function updateDifficultyApi(sessionId, difficultyLevel) {
+  const response = await fetch(
+    `${API_URL}/api/session/difficulty`,
+    {
+      method: "POST",
+      headers: getAuthHeaders(),
+      body: JSON.stringify({
+        session_id: sessionId,
+        difficulty_level: difficultyLevel
+      })
+    }
+  );
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(
+      error.detail || "Failed to update difficulty."
+    );
+  }
+
+  return response.json();
+}

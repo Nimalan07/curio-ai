@@ -70,10 +70,6 @@ curio/
 │           ├── Teach.jsx
 │           └── Results.jsx
 │
-├── docs/
-│   ├── architecture.md
-│   └── pitch_script.md
-│
 └── data/
     └── sample_sessions/
         └── photosynthesis_demo.json

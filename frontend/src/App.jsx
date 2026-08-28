@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import TopicSelector from "./pages/TopicSelector";
 import Teach from "./pages/Teach";
 import Results from "./pages/Results";
+import Dashboard from "./pages/Dashboard";
 import { getCompletedReport, getSession, logoutApi } from "./api/curioApi";
 
 function App() {
@@ -118,6 +119,7 @@ function App() {
           onStart={startTeaching} 
           user={user} 
           onLogout={handleLogout} 
+          onDashboard={() => setPage("dashboard")}
         />
       )}
       {page === "login" && (
@@ -134,6 +136,7 @@ function App() {
           onLogout={handleLogout}
           onViewReport={handleViewReport}
           onResumeSession={handleResumeSession}
+          onDashboard={() => setPage("dashboard")}
         />
       )}
       {page === "teach" && (
@@ -153,6 +156,13 @@ function App() {
           report={report}
           onNewSession={startNewSession}
           onBackToTeaching={() => setPage("topic")}
+        />
+      )}
+      {page === "dashboard" && (
+        <Dashboard
+          user={user}
+          onLogout={handleLogout}
+          onHome={() => setPage(user ? "topic" : "home")}
         />
       )}
     </>

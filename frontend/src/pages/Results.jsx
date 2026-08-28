@@ -1,12 +1,15 @@
 import { useRef } from "react";
 import RadarChart from "../components/RadarChart";
 import ReportDownload from "../components/ReportDownload";
+import TeachBack from "../components/TeachBack";
+import MisconceptionPatterns from "../components/MisconceptionPatterns";
 
 export default function Results({
   report,
   onNewSession,
   onBackToTeaching,
-  topic
+  topic,
+  sessionId
 }) {
   const reportRef = useRef(null);
 
@@ -98,6 +101,10 @@ export default function Results({
           items={report.suggested_review}
           type="review"
         />
+
+        <MisconceptionPatterns patterns={report.misconception_patterns || []} />
+
+        <TeachBack sessionId={sessionId} />
       </div>
 
       <div className="report-actions">

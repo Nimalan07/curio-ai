@@ -42,7 +42,7 @@ class StudentAgent:
         except json.JSONDecodeError:
             return None
 
-    def generate_response(self, topic, messages):
+    def generate_response(self, topic, messages, difficulty_level=2):
         # Extract the latest user message
         last_user_message = ""
         for msg in reversed(messages):
@@ -70,6 +70,19 @@ class StudentAgent:
                 "Do not quote it unnecessarily.\n"
             )
 
+        from core.adaptive_engine import build_difficulty_instruction, difficulty_name
+        difficulty_instruction = build_difficulty_instruction(difficulty_level)
+
+        prompt_content = f"""
+Current topic:
+{topic}
+
+Current adaptive difficulty:
+{difficulty_level} ({difficulty_name(difficulty_level)})
+
+{difficulty_instruction}
+"""
+
         prompt_messages = [
             {
                 "role": "system",
@@ -77,7 +90,7 @@ class StudentAgent:
             },
             {
                 "role": "system",
-                "content": f"The current topic is: {topic}"
+                "content": prompt_content
             }
         ]
 
@@ -90,6 +103,8 @@ class StudentAgent:
             return {
                 "question": parsed["question"],
                 "reason": parsed.get("reason", "I noticed a part of your explanation that needs clarification."),
+                "difficulty": parsed.get("difficulty", difficulty_level),
+                "answer_quality": parsed.get("answer_quality", 0.5),
                 "knowledge_used": knowledge["used"],
                 "knowledge_similarity": knowledge["similarity"]
             }
@@ -97,6 +112,8 @@ class StudentAgent:
         return {
             "question": response,
             "reason": "I want to understand your reasoning more deeply.",
+            "difficulty": difficulty_level,
+            "answer_quality": 0.5,
             "knowledge_used": knowledge["used"],
             "knowledge_similarity": knowledge["similarity"]
         }

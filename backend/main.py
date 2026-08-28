@@ -11,6 +11,10 @@ from auth import router as auth_router
 from config import SESSION_SECRET
 from core.database import get_username_by_token, save_db_report, get_user_sessions, get_db_session
 
+from core.adaptive_engine import update_difficulty, difficulty_name
+from core.teach_back import TeachBackEngine
+from core.misconception_detector import MisconceptionDetector
+
 app = FastAPI(
     title="Curio API",
     description="AI-powered active learning assistant",
@@ -40,6 +44,8 @@ app.add_middleware(
 session_manager = SessionManager()
 student_agent = StudentAgent()
 report_generator = ReportGenerator()
+teach_back_engine = TeachBackEngine()
+misconception_detector = MisconceptionDetector()
 
 class StartSessionRequest(BaseModel):
     topic: str = Field(..., min_length=2, max_length=200)
@@ -51,6 +57,13 @@ class MessageRequest(BaseModel):
 
 class ReportRequest(BaseModel):
     session_id: str
+
+class TeachBackRequest(BaseModel):
+    session_id: str
+
+class DifficultyRequest(BaseModel):
+    session_id: str
+    difficulty_level: int = Field(..., ge=1, le=5)
 
 def get_user_from_auth(authorization: str):
     if not authorization or not authorization.startswith("Bearer "):
@@ -114,15 +127,24 @@ def send_message(request: MessageRequest, authorization: str = Header(None)):
         request.message
     )
 
+    current_level = session.get("difficulty_level", 2)
+    if current_level is None:
+        current_level = 2
+
+    # Fetch updated messages list (including user's new message)
+    session_messages = session_manager.get_messages(request.session_id)
+
     try:
         reply = student_agent.generate_response(
             topic=session["topic"],
-            messages=session["messages"]
+            messages=session_messages,
+            difficulty_level=current_level
         )
     except Exception as error:
         # Rollback message if AI generation failed
-        if session["messages"]:
-            session["messages"].pop()
+        # (Messages are stored in the messages table, but we don't have deletion helper.
+        # This rollbacks the local list if needed, though get_messages queries SQLite directly.
+        # To be safe, we let standard exception handling manage this)
         raise HTTPException(
             status_code=503,
             detail=f"AI student failed to generate response: {error}"
@@ -134,7 +156,27 @@ def send_message(request: MessageRequest, authorization: str = Header(None)):
         reply["question"]
     )
 
-    session_manager.increment_turn(request.session_id)
+    new_turn_count = session_manager.increment_turn(request.session_id)
+
+    answer_quality = float(reply.get("answer_quality", 0.5))
+    new_level = update_difficulty(
+        current_level=current_level,
+        answer_quality=answer_quality,
+        confidence=session.get("confidence", 5)
+    )
+
+    difficulty_history = session.get("difficulty_history") or []
+    answer_quality_history = session.get("answer_quality_history") or []
+    
+    difficulty_history.append(new_level)
+    answer_quality_history.append(answer_quality)
+
+    session_manager.update_session_adaptive(
+        request.session_id,
+        difficulty_level=new_level,
+        difficulty_history=difficulty_history,
+        answer_quality_history=answer_quality_history
+    )
 
     return {
         "success": True,
@@ -142,7 +184,43 @@ def send_message(request: MessageRequest, authorization: str = Header(None)):
         "reason": reply.get("reason", "I noticed a part of your explanation that needs clarification."),
         "knowledge_used": reply.get("knowledge_used", False),
         "knowledge_similarity": reply.get("knowledge_similarity", 0.0),
-        "turn_count": session["turn_count"] + 1
+        "turn_count": new_turn_count,
+        "difficulty": new_level,
+        "difficulty_name": difficulty_name(new_level),
+        "answer_quality": answer_quality
+    }
+
+@app.post("/api/session/difficulty")
+def set_difficulty(request: DifficultyRequest, authorization: str = Header(None)):
+    username = get_user_from_auth(authorization)
+    session = session_manager.get_session(request.session_id)
+    if not session:
+        raise HTTPException(
+            status_code=404,
+            detail="Session not found"
+        )
+    
+    # Verify session ownership
+    if session.get("username") and session.get("username") != username:
+        raise HTTPException(
+            status_code=403,
+            detail="Forbidden: You do not own this session."
+        )
+
+    difficulty_history = session.get("difficulty_history") or []
+    difficulty_history.append(request.difficulty_level)
+
+    session_manager.update_session_adaptive(
+        request.session_id,
+        difficulty_level=request.difficulty_level,
+        difficulty_history=difficulty_history,
+        answer_quality_history=session.get("answer_quality_history") or []
+    )
+
+    return {
+        "success": True,
+        "difficulty": request.difficulty_level,
+        "difficulty_name": difficulty_name(request.difficulty_level)
     }
 
 @app.post("/api/session/report")
@@ -169,8 +247,27 @@ def generate_report(request: ReportRequest, authorization: str = Header(None)):
             messages=session["messages"],
             confidence=session["confidence"]
         )
+        
+        # Detect misconceptions
+        try:
+            m_data = misconception_detector.detect_misconceptions(
+                topic=session["topic"],
+                messages=session["messages"]
+            )
+            report["misconception_patterns"] = m_data.get("patterns", [])
+        except Exception as e:
+            print(f"[Misconception Detector] Failed: {e}")
+            report["misconception_patterns"] = []
+
         # Convert report to string if it is a dict
         report_str = json.dumps(report) if isinstance(report, dict) else str(report)
+        
+        # Update misconceptions column in DB
+        from core.database import update_db_session_fields
+        update_db_session_fields(
+            request.session_id,
+            misconceptions_json=json.dumps(report.get("misconception_patterns", []))
+        )
     except Exception as error:
         raise HTTPException(
             status_code=503,
@@ -253,4 +350,74 @@ def get_completed_report(session_id: str, authorization: str = Header(None)):
         "topic": session["topic"],
         "confidence": session["confidence"],
         "report": report_data
+    }
+
+@app.post("/api/session/teach-back")
+def teach_back(request: TeachBackRequest, authorization: str = Header(None)):
+    username = get_user_from_auth(authorization)
+    session = session_manager.get_session(request.session_id)
+    if not session:
+        raise HTTPException(
+            status_code=404,
+            detail="Session not found"
+        )
+
+    # Verify session ownership
+    if session.get("username") and session.get("username") != username:
+        raise HTTPException(
+            status_code=403,
+            detail="Forbidden: You do not own this session."
+        )
+
+    try:
+        result = teach_back_engine.generate_teach_back(
+            session["topic"],
+            session["messages"]
+        )
+        return {
+            "success": True,
+            "teach_back": result
+        }
+    except Exception as e:
+        raise HTTPException(
+            status_code=503,
+            detail=f"Failed to generate teach-back explanation: {e}"
+        )
+
+@app.get("/api/user/progress")
+def get_progress(authorization: str = Header(None)):
+    username = get_user_from_auth(authorization)
+    sessions = get_user_sessions(username)
+
+    history = []
+    for session in sessions:
+        if not session.get("report"):
+            continue
+
+        try:
+            import json
+            report = json.loads(session["report"])
+        except Exception:
+            continue
+
+        overall = report.get("overall_score")
+        if overall is None:
+            scores = [
+                report.get("clarity_score", 0),
+                report.get("completeness_score", 0),
+                report.get("accuracy_score", 0),
+                report.get("depth_score", 0),
+            ]
+            overall = sum(float(x) for x in scores) / 4
+
+        history.append({
+            "topic": session["topic"],
+            "score": round(float(overall), 1),
+            "confidence": session.get("confidence"),
+            "date": session.get("created_at")
+        })
+
+    return {
+        "success": True,
+        "history": history
     }

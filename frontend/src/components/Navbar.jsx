@@ -8,6 +8,7 @@ function Navbar({
   onScrollToReport,
   user,
   onLogout,
+  onDashboard,
 }) {
   return (
     <header className="navbar">
@@ -31,11 +32,11 @@ function Navbar({
 
         {!showBack && (
           <nav className="navbar-links">
-            <button className="nav-link-btn" onClick={onScrollToHowItWorks}>
-              How it works
-            </button>
             <button className="nav-link-btn" onClick={onScrollToFeatures}>
               Features
+            </button>
+            <button className="nav-link-btn" onClick={onScrollToHowItWorks}>
+              How it works
             </button>
             <button className="nav-link-btn" onClick={onScrollToScience}>
               Learning science
@@ -55,6 +56,11 @@ function Navbar({
           {user ? (
             <div className="user-profile-menu">
               <span className="user-greeting">✦ {user.username}</span>
+              {onDashboard && (
+                <button className="nav-dashboard-btn" onClick={onDashboard}>
+                  Dashboard
+                </button>
+              )}
               <button className="nav-logout-btn" onClick={onLogout}>
                 Log out
               </button>

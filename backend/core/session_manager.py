@@ -17,8 +17,33 @@ class SessionManager:
     def get_session(self, session_id: str):
         session = get_db_session(session_id)
         if session:
+            import json
+            # Parse JSON columns
+            for key in ["difficulty_history", "answer_quality_history", "misconceptions"]:
+                val = session.get(key)
+                if isinstance(val, str) and val.strip():
+                    try:
+                        session[key] = json.loads(val)
+                    except Exception:
+                        session[key] = []
+                elif not val:
+                    session[key] = []
+                    
+            if session.get("difficulty_level") is None:
+                session["difficulty_level"] = 2
+                
             session["messages"] = get_db_messages(session_id)
         return session
+
+    def update_session_adaptive(self, session_id: str, difficulty_level: int, difficulty_history: list, answer_quality_history: list):
+        import json
+        from core.database import update_db_session_fields
+        update_db_session_fields(
+            session_id,
+            difficulty_level=difficulty_level,
+            difficulty_history_json=json.dumps(difficulty_history),
+            answer_quality_history_json=json.dumps(answer_quality_history)
+        )
 
     def add_message(self, session_id: str, role: str, content: str):
         session = get_db_session(session_id)

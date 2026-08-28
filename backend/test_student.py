@@ -1,7 +1,5 @@
-from ollama_client import (
-    check_ollama,
-    generate_student_response
-)
+from core.ollama_client import check_ollama
+from core.student_agent import StudentAgent
 
 
 def main():
@@ -16,6 +14,7 @@ def main():
 
     print("\n[OK] Ollama is running.\n")
 
+    agent = StudentAgent()
     conversation = []
 
     topic = input("Topic: ").strip()
@@ -46,11 +45,14 @@ def main():
         )
 
         try:
-            ai_reply = generate_student_response(
-                conversation
+            res = agent.generate_response(
+                topic=topic,
+                messages=conversation,
+                difficulty_level=2
             )
+            ai_reply = res["question"]
 
-        except RuntimeError as error:
+        except Exception as error:
             print(f"\n[ERROR] Error: {error}")
             break
 

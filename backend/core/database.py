@@ -46,6 +46,30 @@ def init_db():
         cursor.execute("ALTER TABLE sessions ADD COLUMN report TEXT")
     except sqlite3.OperationalError:
         pass
+
+    # Try altering sessions to add difficulty_level column if it doesn't exist
+    try:
+        cursor.execute("ALTER TABLE sessions ADD COLUMN difficulty_level INTEGER DEFAULT 2")
+    except sqlite3.OperationalError:
+        pass
+
+    # Try altering sessions to add difficulty_history column if it doesn't exist
+    try:
+        cursor.execute("ALTER TABLE sessions ADD COLUMN difficulty_history TEXT")
+    except sqlite3.OperationalError:
+        pass
+
+    # Try altering sessions to add answer_quality_history column if it doesn't exist
+    try:
+        cursor.execute("ALTER TABLE sessions ADD COLUMN answer_quality_history TEXT")
+    except sqlite3.OperationalError:
+        pass
+
+    # Try altering sessions to add misconceptions column if it doesn't exist
+    try:
+        cursor.execute("ALTER TABLE sessions ADD COLUMN misconceptions TEXT")
+    except sqlite3.OperationalError:
+        pass
         
     # Create user_tokens table
     cursor.execute("""
@@ -250,6 +274,33 @@ def get_user_sessions(username):
     rows = cursor.fetchall()
     conn.close()
     return [dict(r) for r in rows]
+
+def update_db_session_fields(session_id, difficulty_level=None, difficulty_history_json=None, answer_quality_history_json=None, misconceptions_json=None):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    updates = []
+    params = []
+    
+    if difficulty_level is not None:
+        updates.append("difficulty_level = ?")
+        params.append(difficulty_level)
+    if difficulty_history_json is not None:
+        updates.append("difficulty_history = ?")
+        params.append(difficulty_history_json)
+    if answer_quality_history_json is not None:
+        updates.append("answer_quality_history = ?")
+        params.append(answer_quality_history_json)
+    if misconceptions_json is not None:
+        updates.append("misconceptions = ?")
+        params.append(misconceptions_json)
+        
+    if updates:
+        params.append(session_id)
+        sql = f"UPDATE sessions SET {', '.join(updates)} WHERE session_id = ?"
+        cursor.execute(sql, params)
+        conn.commit()
+    conn.close()
 
 # Initialize database tables immediately
 init_db()

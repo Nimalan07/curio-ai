@@ -18,7 +18,8 @@ function TopicSelector({
   user,
   onLogout,
   onViewReport,
-  onResumeSession
+  onResumeSession,
+  onDashboard
 }) {
   const [topic, setTopic] = useState("");
   const [confidence, setConfidence] = useState(8);
@@ -72,7 +73,7 @@ function TopicSelector({
 
   return (
     <div className="page topic-page">
-      <Navbar onHome={onBack} showBack user={user} onLogout={onLogout} />
+      <Navbar onHome={onBack} showBack user={user} onLogout={onLogout} onDashboard={onDashboard} />
 
       <main className="topic-container">
         <div className="section-label">STEP 01</div>
