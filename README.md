@@ -6,11 +6,15 @@ Instead of quizzing you, Curio asks you to teach.
 
 ## Features
 - **Aether-Inspired Premium SaaS UI**: A clean, editorial-style navy/white interface with green/blue accents, smooth hover animations, and elegant card sections.
-- **Confidence Gap Evaluation**: Before a session, students rate their confidence (1-10). Curio compares this rating with the demonstrated clarity, completeness, accuracy, and depth to map the *Confidence Gap*.
-- **"Why I Asked This" Transparency**: Collapsible reasoning blocks showing exactly what gap or contradiction in the student's explanation triggered the AI's question.
-- **AI Thinking Animation**: Dynamic bouncing indicator rendering active typing states.
-- **Understanding Radar Chart**: Interactive recharts visualization mapping cognitive structures.
-- **Offline Report Card Download**: Instant canvas rendering to download your report card as a PNG with a single click.
+- **Secure Google Authentication & User Accounts**: Support for traditional credentials and seamless Google Sign-In with persistent JWT authentication.
+- **Adaptive Difficulty Control**: Curio dynamically adjusts question complexity across 5 cognitive levels (Basic, Clarifying, Application, Deep Reasoning, Transfer) based on answer quality and confidence. Users can also manually override the level using the visual tracker.
+- **Speech-to-Text Voice Input**: Explain concepts hands-free. Built-in microphone support transcripts your explanation in real-time using the native Web Speech API.
+- **"Why I Asked This" Transparency**: Collapsible reasoning blocks showing exactly what gap, contradiction, or pattern in the student's explanation prompted Curio's response.
+- **Understanding Radar Chart & Metrics**: Recharts-based radar visualization and progress bars mapping four core dimensions of understanding: Clarity, Completeness, Accuracy, and Depth.
+- **AI Misconception Detection**: Automatically flags incorrect assumptions, provides direct evidence from what you said, assigns severity ratings, and links suggested concepts to review.
+- **Interactive Teach-Back Analysis**: Compare your explanation directly with an ideal concept explanation to see what you covered well and what was missing.
+- **Telemetry & Growth Dashboard**: An interactive Line Chart tracking your overall understanding score trends over consecutive sessions to visualize your growth.
+- **Offline Report Card Download**: Instantly render and download your personalized report card as a high-quality PNG with one click.
 
 ---
 
@@ -25,14 +29,21 @@ curio/
 │
 ├── backend/
 │   ├── main.py
+│   ├── auth.py
 │   ├── config.py
 │   │
 │   ├── core/
 │   │   ├── __init__.py
+│   │   ├── adaptive_engine.py
+│   │   ├── database.py
+│   │   ├── knowledge_gate.py
+│   │   ├── knowledge_retriever.py
+│   │   ├── misconception_detector.py
 │   │   ├── ollama_client.py
-│   │   ├── student_agent.py
 │   │   ├── report_generator.py
-│   │   └── session_manager.py
+│   │   ├── session_manager.py
+│   │   ├── student_agent.py
+│   │   └── teach_back.py
 │   │
 │   ├── prompts/
 │   │   ├── student_persona.txt
@@ -55,20 +66,30 @@ curio/
 │       │   └── curioApi.js
 │       │
 │       ├── components/
-│       │   ├── Navbar.jsx
-│       │   ├── ThinkingIndicator.jsx
-│       │   ├── ConfidenceSlider.jsx
-│       │   ├── ChatMessage.jsx
+│       │   ├── AdaptiveDifficulty.jsx
 │       │   ├── ChatInput.jsx
+│       │   ├── ChatMessage.jsx
+│       │   ├── ChatWindow.jsx
+│       │   ├── ConfidenceSlider.jsx
+│       │   ├── GrowthDashboard.jsx
+│       │   ├── Loading.jsx
+│       │   ├── MisconceptionPatterns.jsx
+│       │   ├── Navbar.jsx
 │       │   ├── ProgressBar.jsx
 │       │   ├── RadarChart.jsx
-│       │   └── ReportDownload.jsx
+│       │   ├── ReportDownload.jsx
+│       │   ├── TeachBack.jsx
+│       │   ├── ThinkingIndicator.jsx
+│       │   └── VoiceInput.jsx
 │       │
 │       └── pages/
+│           ├── Dashboard.jsx
 │           ├── Home.jsx
-│           ├── TopicSelector.jsx
+│           ├── Login.jsx
+│           ├── Login.css
+│           ├── Results.jsx
 │           ├── Teach.jsx
-│           └── Results.jsx
+│           └── TopicSelector.jsx
 │
 └── data/
     └── sample_sessions/
