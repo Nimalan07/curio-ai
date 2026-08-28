@@ -3,7 +3,7 @@ import "./Login.css";
 
 const API_URL = "http://localhost:8000";
 
-export default function Login({ onNavigate }) {
+export default function Login({ onSuccess, onBack }) {
   const [mode, setMode] = useState("signin");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -45,10 +45,9 @@ export default function Login({ onNavigate }) {
         throw new Error(data.detail || "Authentication failed.");
       }
 
-      localStorage.setItem("curio_token", data.token);
-      localStorage.setItem("curio_user", JSON.stringify(data.user));
-
-      onNavigate("topic");
+      if (onSuccess) {
+        onSuccess(data.user, data.token);
+      }
     } catch (err) {
       setError(err.message || "Something went wrong.");
     } finally {
@@ -66,7 +65,7 @@ export default function Login({ onNavigate }) {
       <header className="login-nav">
         <div
           className="curio-brand"
-          onClick={() => onNavigate("home")}
+          onClick={onBack}
         >
           <div className="curio-logo">
             ✦
@@ -76,7 +75,7 @@ export default function Login({ onNavigate }) {
 
         <button
           className="back-home"
-          onClick={() => onNavigate("home")}
+          onClick={onBack}
         >
           ← Back to home
         </button>

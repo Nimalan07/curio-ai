@@ -1,7 +1,7 @@
 .login-page {
   min-height: 100vh;
-  background: #f8f7f2;
-  color: #293033;
+  background: #f8fafc;
+  color: #0f172a;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
@@ -13,8 +13,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(255, 255, 255, 0.75);
-  border-bottom: 1px solid #e9e7df;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid #e2e8f0;
 }
 
 .curio-brand {
@@ -35,11 +36,7 @@
   justify-content: center;
   color: white;
   font-size: 21px;
-  background: linear-gradient(
-    135deg,
-    #159f96,
-    #76a06c
-  );
+  background: linear-gradient(135deg, #1976d2, #36a86a);
 }
 
 .back-home {
@@ -47,12 +44,13 @@
   background: transparent;
   font-size: 14px;
   font-weight: 600;
-  color: #53605d;
+  color: #64748b;
   cursor: pointer;
+  transition: color 0.2s;
 }
 
 .back-home:hover {
-  color: #719866;
+  color: #1976d2;
 }
 
 /* MAIN */
@@ -72,24 +70,26 @@
 .login-decoration {
   position: absolute;
   border-radius: 50%;
-  filter: blur(2px);
+  filter: blur(80px);
   pointer-events: none;
 }
 
 .decoration-one {
   width: 380px;
   height: 380px;
-  background: #e8f0df;
+  background: #e0f2fe; /* Light blue */
   left: -170px;
   top: 80px;
+  opacity: 0.6;
 }
 
 .decoration-two {
   width: 300px;
   height: 300px;
-  background: #e2eee7;
+  background: #dcfce7; /* Light green */
   right: -100px;
   bottom: 20px;
+  opacity: 0.6;
 }
 
 /* CARD */
@@ -98,10 +98,10 @@
   width: min(1050px, 100%);
   display: grid;
   grid-template-columns: 1fr 0.95fr;
-  background: #fffefa;
-  border: 1px solid #e9e5da;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 30px;
-  box-shadow: 0 25px 70px rgba(49, 60, 48, 0.09);
+  box-shadow: 0 25px 70px rgba(15, 23, 42, 0.06);
   overflow: hidden;
   position: relative;
   z-index: 2;
@@ -114,10 +114,10 @@
   background:
     radial-gradient(
       circle at 15% 10%,
-      #edf4e8,
+      #e0f2fe,
       transparent 32%
     ),
-    #f4f3e9;
+    #f8fafc;
   text-align: left;
 }
 
@@ -127,15 +127,15 @@
   gap: 8px;
   padding: 9px 15px;
   border-radius: 30px;
-  background: #e7f0e1;
-  color: #54734e;
+  background: #e0f2fe;
+  color: #0369a1;
   font-size: 13px;
   font-weight: 700;
 }
 
 .intro-badge span {
   font-size: 8px;
-  color: #82a977;
+  color: #0ea5e9;
 }
 
 .login-intro h1 {
@@ -143,16 +143,16 @@
   font-size: clamp(44px, 5vw, 65px);
   line-height: 0.98;
   letter-spacing: -3px;
-  color: #293033;
+  color: #0f172a;
 }
 
 .login-intro h1 span {
-  color: #719866;
+  color: #36a86a;
 }
 
 .login-intro > p {
   max-width: 470px;
-  color: #66716d;
+  color: #475569;
   line-height: 1.75;
   font-size: 16px;
 }
@@ -181,9 +181,9 @@
   align-items: center;
   justify-content: center;
   background: #fff;
-  color: #719866;
+  color: #1976d2;
   font-weight: 800;
-  box-shadow: 0 5px 20px rgba(50, 70, 50, 0.07);
+  box-shadow: 0 5px 20px rgba(15, 23, 42, 0.05);
 }
 
 .learning-point strong {
@@ -194,7 +194,7 @@
 
 .learning-point span {
   display: block;
-  color: #7a827e;
+  color: #64748b;
   font-size: 13px;
 }
 
@@ -212,12 +212,12 @@
   margin: 0;
   font-size: 32px;
   letter-spacing: -1px;
-  color: #293033;
+  color: #0f172a;
 }
 
 .form-heading p {
   margin: 9px 0 28px;
-  color: #7a817d;
+  color: #64748b;
   font-size: 14px;
 }
 
@@ -227,7 +227,7 @@
   height: 52px;
   width: 100%;
   border-radius: 13px;
-  border: 1px solid #dfddd5;
+  border: 1px solid #e2e8f0;
   background: #fff;
   display: flex;
   align-items: center;
@@ -235,14 +235,14 @@
   gap: 11px;
   font-size: 14px;
   font-weight: 700;
-  color: #3c4442;
+  color: #334155;
   cursor: pointer;
   transition: 0.2s;
 }
 
 .google-button:hover {
-  background: #faf9f5;
-  border-color: #cfcac0;
+  background: #f8fafc;
+  border-color: #cbd5e1;
   transform: translateY(-1px);
 }
 
@@ -259,7 +259,7 @@
   align-items: center;
   gap: 12px;
   margin: 23px 0;
-  color: #a0a49f;
+  color: #94a3b8;
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -270,7 +270,7 @@
   content: "";
   height: 1px;
   flex: 1;
-  background: #e7e5de;
+  background: #e2e8f0;
 }
 
 /* FORM */
@@ -282,7 +282,7 @@ form {
 
 form label {
   margin-bottom: 7px;
-  color: #4e5754;
+  color: #334155;
   font-size: 13px;
   font-weight: 700;
 }
@@ -291,18 +291,18 @@ form input {
   height: 49px;
   padding: 0 14px;
   margin-bottom: 18px;
-  border: 1px solid #deddd5;
+  border: 1px solid #e2e8f0;
   border-radius: 11px;
   outline: none;
   background: #fff;
-  color: #293033;
+  color: #0f172a;
   font-size: 14px;
   transition: 0.2s;
 }
 
 form input:focus {
-  border-color: #82a977;
-  box-shadow: 0 0 0 3px rgba(126, 164, 111, 0.12);
+  border-color: #1976d2;
+  box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.12);
 }
 
 /* PASSWORD */
@@ -323,7 +323,7 @@ form input:focus {
   top: 14px;
   border: none;
   background: transparent;
-  color: #719866;
+  color: #1976d2;
   font-size: 12px;
   font-weight: 700;
   cursor: pointer;
@@ -357,7 +357,7 @@ form input:focus {
 .forgot-password {
   border: none;
   background: transparent;
-  color: #719866;
+  color: #1976d2;
   font-size: 12px;
   font-weight: 700;
   cursor: pointer;
@@ -369,22 +369,18 @@ form input:focus {
   height: 52px;
   border: none;
   border-radius: 13px;
-  background: linear-gradient(
-    100deg,
-    #729866,
-    #648e59
-  );
+  background: linear-gradient(135deg, #1976d2, #36a86a);
   color: white;
   font-size: 15px;
   font-weight: 800;
   cursor: pointer;
-  box-shadow: 0 10px 25px rgba(105, 143, 93, 0.2);
+  box-shadow: 0 10px 25px rgba(25, 118, 210, 0.15);
   transition: 0.2s;
 }
 
 .login-submit:hover {
   transform: translateY(-2px);
-  box-shadow: 0 14px 30px rgba(105, 143, 93, 0.25);
+  box-shadow: 0 14px 30px rgba(25, 118, 210, 0.25);
 }
 
 .login-submit:disabled {
@@ -408,14 +404,14 @@ form input:focus {
 .switch-mode {
   margin-top: 24px;
   text-align: center;
-  color: #7a817d;
+  color: #64748b;
   font-size: 13px;
 }
 
 .switch-mode button {
   border: none;
   background: transparent;
-  color: #719866;
+  color: #1976d2;
   font-weight: 800;
   cursor: pointer;
   margin-left: 5px;
@@ -426,7 +422,7 @@ form input:focus {
 .privacy-text {
   margin-top: 20px;
   text-align: center;
-  color: #aaa9a1;
+  color: #94a3b8;
   font-size: 10px;
   line-height: 1.5;
 }
