@@ -87,6 +87,7 @@ def get_user_from_auth(authorization: str):
     return username
 
 @app.get("/api/health")
+@app.head("/api/health")
 def health():
     ollama_available = check_ollama()
     return {
