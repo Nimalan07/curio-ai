@@ -23,6 +23,7 @@ class GroqClient:
         }
         
         response = requests.post(self.api_url, json=payload, headers=headers, timeout=45)
-        response.raise_for_status()
+        if not response.ok:
+            raise RuntimeError(f"Groq API error {response.status_code}: {response.text}")
         data = response.json()
         return data["choices"][0]["message"]["content"]
