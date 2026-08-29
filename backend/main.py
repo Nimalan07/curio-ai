@@ -147,13 +147,12 @@ def send_message(request: MessageRequest, authorization: str = Header(None)):
             difficulty_level=current_level
         )
     except Exception as error:
-        # Rollback message if AI generation failed
-        # (Messages are stored in the messages table, but we don't have deletion helper.
-        # This rollbacks the local list if needed, though get_messages queries SQLite directly.
-        # To be safe, we let standard exception handling manage this)
+        import traceback
+        traceback.print_exc()
+
         raise HTTPException(
             status_code=503,
-            detail=f"AI student failed to generate response: {error}"
+            detail=f"AI student failed to generate response: {type(error).__name__}: {str(error)}"
         )
 
     session_manager.add_message(

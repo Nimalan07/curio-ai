@@ -22,8 +22,22 @@ class GroqClient:
             "stream": False
         }
         
-        response = requests.post(self.api_url, json=payload, headers=headers, timeout=45)
+        response = requests.post(
+            self.api_url,
+            json=payload,
+            headers=headers,
+            timeout=45
+        )
+
+        print("=== GROQ DEBUG ===")
+        print("Status:", response.status_code)
+        print("Response:", response.text[:2000])
+        print("==================")
+
         if not response.ok:
-            raise RuntimeError(f"Groq API error {response.status_code}: {response.text}")
+            raise RuntimeError(
+                f"Groq API error {response.status_code}: {response.text[:2000]}"
+            )
+
         data = response.json()
         return data["choices"][0]["message"]["content"]
