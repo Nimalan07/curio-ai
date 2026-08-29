@@ -8,7 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import { getCompletedReport, getSession, logoutApi } from "./api/curioApi";
 
 function App() {
-  const [page, setPage] = useState(() => localStorage.getItem("curio_page") || "home");
+  const [page, setPage] = useState("home");
   const [topic, setTopic] = useState(() => localStorage.getItem("curio_topic") || "");
   const [sessionId, setSessionId] = useState(() => localStorage.getItem("curio_session_id") || "");
   const [report, setReport] = useState(() => {
@@ -29,10 +29,6 @@ function App() {
   });
 
   // Sync states to localStorage
-  useEffect(() => {
-    localStorage.setItem("curio_page", page);
-  }, [page]);
-
   useEffect(() => {
     localStorage.setItem("curio_topic", topic);
   }, [topic]);
@@ -68,33 +64,15 @@ function App() {
       localStorage.setItem("curio_user", JSON.stringify(userData));
       setUser(userData);
       window.history.replaceState({}, document.title, window.location.pathname);
-      
-      const savedPage = localStorage.getItem("curio_page");
-      if (savedPage && savedPage !== "home" && savedPage !== "login") {
-        setPage(savedPage);
-      } else {
-        setPage("topic");
-      }
+      setPage("home");
     } else {
       // Check if user is already logged in
       const storedToken = localStorage.getItem("curio_token");
       const storedUser = localStorage.getItem("curio_user");
       if (storedToken && storedUser) {
         setUser(JSON.parse(storedUser));
-        const savedPage = localStorage.getItem("curio_page");
-        if (savedPage && savedPage !== "home" && savedPage !== "login") {
-          setPage(savedPage);
-        } else {
-          setPage("topic");
-        }
-      } else {
-        // If not logged in, force them to home or login page
-        setPage((prev) => {
-          const next = prev === "login" ? "login" : "home";
-          localStorage.setItem("curio_page", next);
-          return next;
-        });
       }
+      setPage("home");
     }
   }, []);
 
